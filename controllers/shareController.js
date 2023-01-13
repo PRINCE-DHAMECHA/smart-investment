@@ -76,7 +76,6 @@ const buy = async (req, res) => {
         throw new BadRequestError("Something Went Wrong :(");
       });
   }
-  throw new BadRequestError("Something Went Wrong :(");
 };
 const sell = async (req, res) => {
   let { ownerName, stockName, price, quantity } = req.body;
@@ -148,7 +147,6 @@ const sell = async (req, res) => {
   } else {
     throw new BadRequestError("Share Doesn't Exist In Your Demat Account!!");
   }
-  throw new BadRequestError("Something Went Wrong :(");
 };
 
 const getShare = async (req, res) => {

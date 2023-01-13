@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useStateContext } from "../context/ContextProvider";
 import { useAppContext } from "../context/appContext";
+import RingLoader from "react-spinners/RingLoader";
 const BuySell = ({ pri }) => {
   const { currentColor } = useStateContext();
   const { authFetch } = useAppContext();
@@ -9,7 +10,9 @@ const BuySell = ({ pri }) => {
   const [msg, setMsg] = useState("");
   const [isSuccess, setIsSuccess] = useState(true);
   const [isDisplay, setIsDisplay] = useState(false);
+  const [loading, setloading] = useState(false);
   const handleSubmit = async () => {
+    setloading(true);
     let price = pri;
     let quantity = Quantity;
     let stockName = localStorage.getItem("stockName");
@@ -24,22 +27,31 @@ const BuySell = ({ pri }) => {
       setMsg(`${isAction} Success`);
       setIsSuccess(true);
       setIsDisplay(true);
+      setloading(false);
     } catch (error) {
-      console.log(error.response.data.msg);
+      console.log(error.response.data);
       setMsg(error.response.data.msg);
       setIsSuccess(false);
       setIsDisplay(true);
+      setloading(false);
     }
   };
   return (
     <div className="w-96 text-center flex flex-col justify-start">
-      {isDisplay && (
+      {isDisplay && !loading && (
         <p
           style={!isSuccess ? { color: "#ff0d00" } : { color: "#00ff11" }}
           className="mt-5 mb-8 font-bold text-lg"
         >
           {msg}
         </p>
+      )}
+      {loading && (
+        <div className="w-full pb-10">
+          <div className="m-auto w-7">
+            <RingLoader color={currentColor} className="-ml-5" />
+          </div>
+        </div>
       )}
       <div className="w-full flex m-auto justify-between text-center">
         <p className="w-2/3 md:text-xl text-base m-auto -ml-8 block font-extrabold tarcking-tight dark:text-white text-black">
