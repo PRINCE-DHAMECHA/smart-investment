@@ -4,7 +4,6 @@ import { useAppContext } from "../context/appContext";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import SetTheme from "../components/SetTheme";
 
 const initialState = {
   name: "",
@@ -27,9 +26,7 @@ export default function Register() {
   } = useAppContext();
   useEffect(() => {
     if (user) {
-      setTimeout(() => {
-        navigate("/");
-      }, 3000);
+      navigate("/portfolio");
     }
   }, [user, navigate]);
   const [state, setstate] = useState(initialState);
@@ -62,17 +59,17 @@ export default function Register() {
     }
   };
   return (
-    <>
-      <div className="dark:bg-secondary-dark-bg dark:text-white min-h-full m-0 pt-0 h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="m-2 md:m-10 mb-10 mt-24 md:mx-9 mx-2  p-2 md:p-6 text-center  dark:bg-secondary-dark-bg bg-white rounded-3xl">
+      <div className="flex justify-center flex-wrap text-center">
+        <Link to="/landing">
+          <img
+            src={currentMode === "Dark" ? logoDark : logoLight}
+            alt="Logo"
+            className="m-auto mt-5 w-2/3 md:w-3/12 h-auto"
+          ></img>
+        </Link>
         <div className="max-w-sm w-full space-y-8">
           <div>
-            <Link to="/landing">
-              <img
-                className="mx-auto h-20 w-auto"
-                src={currentMode === "Dark" ? logoDark : logoLight}
-                alt="Workflow"
-              />
-            </Link>
             <h2
               style={{ color: currentColor }}
               className="mt-12 text-center text-3xl  dark:text-white text-gray-900"
@@ -120,7 +117,7 @@ export default function Register() {
                   value={state.email}
                   name="email"
                   onChange={handleChange}
-                  className={`appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 
+                  className={`appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900
                   focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-md dark:bg-slate-700 dark:text-white dark:border-slate-500 dark:focus:border-gray-300 dark:placeholder-white
                   ${state.isMember ? "rounded-t-md" : ""}`}
                   placeholder="Email address"
@@ -156,12 +153,12 @@ export default function Register() {
                 </button>
               </div>
             </div>
-            <div className="text-center font-medium">
+            <div className="flex gap-1 justify-center text-center font-medium text-black dark:text-white">
               {state.isMember ? " New User?  " : "Already Member? "}
               <button
                 type="button"
                 onClick={toggle}
-                className="font-bold"
+                className="mb-10"
                 style={{ color: currentColor }}
               >
                 {state.isMember ? "Register" : "Login"}
@@ -170,7 +167,6 @@ export default function Register() {
           </form>
         </div>
       </div>
-      <SetTheme />
-    </>
+    </div>
   );
 }

@@ -30,6 +30,18 @@ const UserSchema = new mongoose.Schema({
     type: Number,
     default: 500000,
   },
+  balance: {
+    type: Number,
+    default: 1000000,
+  },
+  givings: {
+    type: Number,
+    default: 0,
+  },
+  borrowings: {
+    type: Number,
+    default: 0,
+  },
 });
 
 UserSchema.pre("save", async function () {

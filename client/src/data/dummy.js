@@ -1,23 +1,47 @@
 import React from "react";
-import { AiOutlineBarChart } from "react-icons/ai";
+import { AiOutlineBarChart, AiFillHome } from "react-icons/ai";
 import { FiEdit } from "react-icons/fi";
 import { CgProfile } from "react-icons/cg";
+import { TbNotes } from "react-icons/tb";
 
 export const links = [
   {
-    title: "Dashboard",
+    title: "General",
+    links: [
+      {
+        name: "Home",
+        to: "landing",
+        icon: <AiFillHome />,
+      },
+      {
+        name: "ThemePicker",
+        to: "ThemePicker",
+        icon: <FiEdit />,
+      },
+    ],
+  },
+  {
+    title: "Stocks",
     links: [
       {
         name: "Portfolio",
+        to: "Portfolio",
         icon: <CgProfile />,
       },
       {
         name: "MarketView",
+        to: "MarketView",
         icon: <AiOutlineBarChart />,
       },
+    ],
+  },
+  {
+    title: "Loans",
+    links: [
       {
-        name: "ThemePicker",
-        icon: <FiEdit />,
+        name: "Notes",
+        to: "notes",
+        icon: <TbNotes />,
       },
     ],
   },

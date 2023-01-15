@@ -7,7 +7,9 @@ import ProtectedRoute from "./pages/ProtectedRoute";
 import ColorPicker from "./pages/ColorPicker";
 import BuyStock from "./components/BuyStock";
 import Portfolio from "./pages/Portfolio";
+import CreateNote from "./pages/createNote";
 import { useAppContext } from "./context/appContext";
+import Notes from "./pages/Notes";
 
 function App() {
   const { currentMode } = useAppContext();
@@ -15,16 +17,12 @@ function App() {
     <div className={currentMode === "Dark" ? "dark" : ""}>
       <BrowserRouter>
         <Routes>
-          <Route path="/landing" element={<Landing />} />
-          <Route path="/register" element={<Register />} />
-          <Route
-            path="*"
-            element={
-              <ProtectedRoute>
-                <Landing />
-              </ProtectedRoute>
-            }
-          />
+          <Route path="/" element={<Utilities />}>
+            <Route index path="" element={<Landing />} />
+            <Route index path="/landing" element={<Landing />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/ThemePicker" element={<ColorPicker />}></Route>
+          </Route>
           <Route
             path="/"
             element={
@@ -33,13 +31,16 @@ function App() {
               </ProtectedRoute>
             }
           >
-            <Route index element={<Portfolio />}></Route>
+            <Route element={<Portfolio />}></Route>
             <Route path="marketView" element={<MarketView />}></Route>
-            <Route path="themePicker" element={<ColorPicker />}></Route>
             <Route path="buyStock" element={<BuyStock />}></Route>
             <Route path="Portfolio" element={<Portfolio />}></Route>
+            <Route path="createNote" element={<CreateNote />}></Route>
+            <Route path="/notes" element={<Notes />}></Route>
           </Route>
-          <Route path="/color" element={<ColorPicker />}></Route>
+          <Route path="/" element={<Utilities />}>
+            <Route path="*" element={<Landing />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </div>

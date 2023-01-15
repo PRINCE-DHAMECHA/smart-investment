@@ -34,7 +34,7 @@ const Fader = ({ text }) => {
   return (
     <>
       <h1
-        style={{ position: "relative" }}
+        style={{ position: "relative", margin: "auto", display: "block" }}
         data-testid="fader"
         className={fadeProp.fade}
       >

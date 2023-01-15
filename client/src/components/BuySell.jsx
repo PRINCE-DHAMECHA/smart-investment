@@ -59,6 +59,7 @@ const BuySell = ({ pri }) => {
           onChange={(e) => setQuantity(e.target.value)}
           type="number"
           className="w-2/3 h-8 mx-auto  text-center border-1 border-solid border-black rounded-md"
+          min={"0"}
         ></input>
       </div>
       <div className="flex my-5 justify-between">

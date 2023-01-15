@@ -32,24 +32,24 @@ const ColorPicker = () => {
         {/* <div id="preview" /> */}
         <div
           className="md:w-1/2 w-5/6 mb-10 rounded-md p-5 text-white text-center m-auto"
-          style={{ background: currentColor }}
+          style={{ borderWidth: "2px", borderColor: currentColor }}
         >
           <p className="m-auto block text-lg">
-            Current Theme : <b>"{currentColor}"</b>
+            Current Theme : <b>{currentColor}</b>
           </p>
         </div>
         <div className="flex justify-center items-center gap-20 flex-wrap">
-          <div>
-            <p className="text-2xl  text-white font-semibold mt-2 mb-4">
-              Inline Pallete
-            </p>
-            <CustomColorPicker id="inline-palette" mode="Palette" />
-          </div>
           <div>
             <p className="text-2xl text-white font-semibold mt-2 mb-4">
               Inline Picker
             </p>
             <CustomColorPicker id="inline-picker" mode="Picker" />
+          </div>
+          <div>
+            <p className="text-2xl  text-white font-semibold mt-2 mb-4">
+              Inline Pallete
+            </p>
+            <CustomColorPicker id="inline-palette" mode="Palette" />
           </div>
         </div>
       </div>

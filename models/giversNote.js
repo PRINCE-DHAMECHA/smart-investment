@@ -1,25 +1,20 @@
 import mongoose from "mongoose";
 
-const ShareSchema = new mongoose.Schema({
-  ownerName: {
+const giversNoteSchema = new mongoose.Schema({
+  lender: {
     type: String,
     required: [true, "Please provide name"],
     minlength: 3,
     maxlength: 20,
     trim: true,
   },
-  stockName: {
-    type: String,
-    required: [true, "Please provide name"],
-    minlength: 3,
-    maxlength: 20,
-    trim: true,
-  },
-  price: {
+  principal: {
     type: Number,
+    required: [true, "Please provide principal"],
   },
-  quantity: {
+  interest: {
     type: Number,
+    required: [true, "Please provide interest"],
   },
   createdBy: {
     type: mongoose.Types.ObjectId,
@@ -28,4 +23,4 @@ const ShareSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.model("Share", ShareSchema);
+export default mongoose.model("giversNote", giversNoteSchema);
