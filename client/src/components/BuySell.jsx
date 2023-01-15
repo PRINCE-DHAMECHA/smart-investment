@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useStateContext } from "../context/ContextProvider";
 import { useAppContext } from "../context/appContext";
 import RingLoader from "react-spinners/RingLoader";
 const BuySell = ({ pri }) => {
-  const { currentColor } = useStateContext();
-  const { authFetch } = useAppContext();
+  const { authFetch, currentColor } = useAppContext();
   const [isAction, setisAction] = useState("Buy");
   const [Quantity, setQuantity] = useState(1);
   const [msg, setMsg] = useState("");
@@ -29,7 +27,6 @@ const BuySell = ({ pri }) => {
       setIsDisplay(true);
       setloading(false);
     } catch (error) {
-      console.log(error.response.data);
       setMsg(error.response.data.msg);
       setIsSuccess(false);
       setIsDisplay(true);

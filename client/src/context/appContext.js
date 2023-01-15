@@ -1,4 +1,4 @@
-import React, { useReducer, useContext } from "react";
+import React, { useReducer, useContext, useState } from "react";
 
 import reducer from "./reducer";
 import axios from "axios";
@@ -28,6 +28,35 @@ const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [activeMenu, setActiveMenu] = useState(true);
+  const [isClicked, setisClicked] = useState(initialState);
+  const [screenSize, setScreenSize] = useState(undefined);
+  const [currentColor, setCurrentColor] = useState(
+    localStorage.getItem("colorMode") || "#1E4DB7"
+  );
+  const [currentMode, setCurrentMode] = useState(
+    localStorage.getItem("themeMode") || "Light"
+  );
+  const [themeSettings, setThemeSettings] = useState(false);
+  const [activeStockId, setactiveStockId] = useState(null);
+  const [activeStockName, setactiveStockName] = useState(null);
+  const setMode = (e) => {
+    setCurrentMode(e.target.value);
+    localStorage.setItem("themeMode", e.target.value);
+    setThemeSettings(false);
+  };
+  const setStockId = (k, stockname) => {
+    localStorage.setItem("stockId", k);
+    localStorage.setItem("stockName", stockname);
+  };
+  const setColor = (color) => {
+    setCurrentColor(color);
+    localStorage.setItem("colorMode", color);
+    setThemeSettings(false);
+  };
+  const handleClick = (clicked) => {
+    setisClicked({ ...initialState, [clicked]: true });
+  };
 
   // axios
   const authFetch = axios.create({
@@ -51,7 +80,6 @@ const AppProvider = ({ children }) => {
       return response;
     },
     (error) => {
-      // console.log(error.response)
       if (error.response.status === 401) {
         logoutUser();
       }
@@ -84,10 +112,8 @@ const AppProvider = ({ children }) => {
 
   const setupUser = async ({ currentUser, endPoint, alertText }) => {
     dispatch({ type: SETUP_USER_BEGIN });
-    console.log(4);
     try {
       const { data } = await authFetch.post(`/auth/${endPoint}`, currentUser);
-      console.log("hi");
       const { user, token } = data;
       dispatch({
         type: SETUP_USER_SUCCESS,
@@ -95,7 +121,6 @@ const AppProvider = ({ children }) => {
       });
       addUserToLocalStorage({ user, token });
     } catch (error) {
-      console.log(error);
       dispatch({
         type: SETUP_USER_ERROR,
         payload: { msg: error.response.data.msg },
@@ -120,9 +145,7 @@ const AppProvider = ({ children }) => {
     try {
       const { data } = await authFetch("share/getUser");
       return data;
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   return (
@@ -135,6 +158,24 @@ const AppProvider = ({ children }) => {
         getShares,
         getUser,
         authFetch,
+        activeMenu,
+        setActiveMenu,
+        isClicked,
+        setisClicked,
+        handleClick,
+        screenSize,
+        setScreenSize,
+        currentColor,
+        currentMode,
+        setColor,
+        setMode,
+        themeSettings,
+        setThemeSettings,
+        activeStockId,
+        setactiveStockId,
+        setStockId,
+        activeStockName,
+        setactiveStockName,
       }}
     >
       {children}

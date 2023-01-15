@@ -1,14 +1,14 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { RiCloseFill } from "react-icons/ri";
 import { links } from "../data/dummy";
-import { useStateContext } from "../context/ContextProvider";
+import { useAppContext } from "../context/appContext";
 import logoDark from "../utils/img/logodark.jpg";
 import logo from "../utils/img/logo.jpg";
 
 const Sidebar = () => {
   const { activeMenu, setActiveMenu, screenSize, currentColor, currentMode } =
-    useStateContext();
+    useAppContext();
   const handleCloseSidebar = () => {
     if (activeMenu && screenSize <= 900) {
       setActiveMenu(false);

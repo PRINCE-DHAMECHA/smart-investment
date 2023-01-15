@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useStateContext } from "../context/ContextProvider";
 import { AiOutlineArrowUp, AiOutlineArrowDown } from "react-icons/ai";
+import { useAppContext } from "../context/appContext";
 
 const MarketViewCard = ({ stockname, k, quantity, buyPrice }) => {
   const id = k;
@@ -47,7 +47,7 @@ const MarketViewCard = ({ stockname, k, quantity, buyPrice }) => {
   const [PerChangeInPrice, setPerChangeInPrice] = useState(
     (((prices[Math.floor(val / 3)] - buyPrice) / buyPrice) * 100).toFixed(2)
   );
-  const { currentColor, currentMode, setStockId } = useStateContext();
+  const { currentColor, currentMode, setStockId } = useAppContext();
   return (
     <div
       style={currentMode !== "Dark" ? { background: "rgb(250,251,251)" } : {}}

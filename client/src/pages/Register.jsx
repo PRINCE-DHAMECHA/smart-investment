@@ -1,6 +1,5 @@
 import logoLight from "../utils/img/logolight.jpg";
 import logoDark from "../utils/img/logodark.jpg";
-import { useStateContext } from "../context/ContextProvider";
 import { useAppContext } from "../context/appContext";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -16,9 +15,16 @@ const initialState = {
 
 export default function Register() {
   const navigate = useNavigate();
-  const { currentMode, currentColor } = useStateContext();
-  const { user, alertType, showAlert, displayAlert, setupUser, alertText } =
-    useAppContext();
+  const {
+    user,
+    alertType,
+    showAlert,
+    displayAlert,
+    setupUser,
+    alertText,
+    currentMode,
+    currentColor,
+  } = useAppContext();
   useEffect(() => {
     if (user) {
       setTimeout(() => {
@@ -41,7 +47,6 @@ export default function Register() {
       return;
     }
     const currentUser = { name, email, password };
-    console.log(1);
     if (isMember) {
       setupUser({
         currentUser,
@@ -49,7 +54,6 @@ export default function Register() {
         alertText: "Login Successful! Redirecting...",
       });
     } else {
-      console.log(2);
       setupUser({
         currentUser,
         endPoint: "register",

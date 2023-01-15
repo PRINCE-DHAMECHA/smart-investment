@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useStateContext } from "../context/ContextProvider";
+import { useAppContext } from "../context/appContext";
 import BuyStockHead from "./BuyStockHead";
+
 import {
   ChartComponent,
   SeriesCollectionDirective,
@@ -18,7 +19,7 @@ import {
 import BuySell from "./BuySell";
 let lineChartData = [];
 const BuyStock = () => {
-  const { currentColor } = useStateContext();
+  const { currentColor } = useAppContext();
   const activeStockId = localStorage.getItem("stockId");
   const activeStockName = localStorage.getItem("stockName");
   const [isActive, setisActive] = useState(false);

@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from "react";
-import Header2 from "../components/Header2";
+import Header from "../components/Header";
 import { useAppContext } from "../context/appContext";
 import RingLoader from "react-spinners/RingLoader";
 import { MarketViewData } from "../data/dummy";
 import PortfolioCard from "../components/PortfolioCard";
-import { useStateContext } from "../context/ContextProvider";
 import { AiOutlineArrowDown, AiOutlineArrowUp } from "react-icons/ai";
 import { HiOutlineRefresh } from "react-icons/hi";
 import { NavLink } from "react-router-dom";
 
 const Portfolio = () => {
-  const { authFetch } = useAppContext();
+  const { authFetch, currentColor } = useAppContext();
   const [invested, setInvested] = useState(0);
   const [current, setCurrent] = useState(0);
   const [share, setShare] = useState([]);
   const [Portfolioshare, setPortfolioshare] = useState([]);
   const [user, setuser] = useState("");
   const [loading, setLoading] = useState(true);
-  const { currentColor } = useStateContext();
   const getShare = async () => {
     try {
       const share = await authFetch("share/getShare");
@@ -29,12 +27,16 @@ const Portfolio = () => {
     }
   };
   useEffect(() => {
+    let t;
     getShare().then(() => {
-      // console.log(1);
-      setTimeout(() => {
+      t = setTimeout(() => {
         setLoading(false);
       }, 3000);
     });
+    return () => {
+      clearTimeout(t);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
     let inv = 0;
@@ -46,7 +48,6 @@ const Portfolio = () => {
     let hour = d.getHours();
     let min = d.getMinutes();
     let sec = d.getSeconds();
-    let day = d.getDate();
     val += hour * 60 * 60;
     val += min * 60;
     val += sec;
@@ -66,10 +67,10 @@ const Portfolio = () => {
           index: item["key"],
         };
         arr.push(obj);
+        return 0;
       });
     }
     setPortfolioshare(arr);
-    console.log(1);
     setInvested(inv.toFixed(2));
     setCurrent(cur.toFixed(2));
   }, [share, user]);
@@ -80,7 +81,6 @@ const Portfolio = () => {
     let hour = d.getHours();
     let min = d.getMinutes();
     let sec = d.getSeconds();
-    let day = d.getDate();
     val += hour * 60 * 60;
     val += min * 60;
     val += sec;
@@ -92,6 +92,7 @@ const Portfolio = () => {
         const data = require(`../data/stockPrices/${item["key"]}`);
         let prices = data["price"];
         cur += check["quantity"] * prices[Math.floor(val / 3)];
+        return 0;
       });
     }
     setCurrent(cur.toFixed(2));
@@ -99,7 +100,7 @@ const Portfolio = () => {
   return (
     <div className="m-2 md:m-10 mb-10 mt-24 md:mx-9 mx-2 p-2 md:p-6 dark:bg-secondary-dark-bg bg-white rounded-3xl text-center">
       <div className="text-center w-full">
-        <Header2 title="Portfolio"></Header2>
+        <Header title="Portfolio" />
         {loading ? (
           <div className="w-full p-20">
             <div className="m-auto w-7">

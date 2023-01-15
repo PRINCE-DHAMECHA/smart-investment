@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import Header2 from "../components/Header2";
+import Header from "../components/Header";
 import { MarketViewData } from "../data/dummy";
 import MarketViewCard from "../components/MarketViewCard";
 import { NavLink } from "react-router-dom";
-import { useStateContext } from "../context/ContextProvider";
+import { useAppContext } from "../context/appContext";
 const MarketView = () => {
-  const { currentColor } = useStateContext();
+  const { currentColor } = useAppContext();
   const [inp, setinp] = useState("");
   return (
     <div className="m-2 md:m-10 mb-10 mt-24 md:mx-9 mx-2  p-2 md:p-6  dark:bg-secondary-dark-bg bg-white rounded-3xl">
       <div className="flex justify-between flex-wrap">
-        <Header2 title="Market" />
+        <Header title="Market" />
         <div className="m-auto mb-3 w-full xl:w-96">
           <div className="input-group w-full xl:w-96 relative flex flex-wrap items-stretch  mb-4 rounded">
             <input

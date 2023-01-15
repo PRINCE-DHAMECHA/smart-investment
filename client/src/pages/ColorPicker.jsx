@@ -1,12 +1,12 @@
 import React from "react";
-import { useStateContext } from "../context/ContextProvider";
 import { ColorPickerComponent } from "@syncfusion/ej2-react-inputs";
 
 import { Header } from "../components";
 import { NavLink } from "react-router-dom";
+import { useAppContext } from "../context/appContext";
 
 const CustomColorPicker = ({ id, mode }) => {
-  const { setColor } = useStateContext();
+  const { setColor } = useAppContext();
   return (
     <ColorPickerComponent
       id={id}
@@ -15,8 +15,8 @@ const CustomColorPicker = ({ id, mode }) => {
       inline
       showButtons={false}
       change={(args) => {
-        document.getElementById("preview").style.backgroundColor =
-          args.currentValue.hex;
+        // document.getElementById("preview").style.backgroundColor =
+        //   args.currentValue.hex;
         setColor(args.currentValue.hex);
       }}
     />
@@ -24,19 +24,31 @@ const CustomColorPicker = ({ id, mode }) => {
 };
 
 const ColorPicker = () => {
-  const { currentColor } = useStateContext();
+  const { currentColor } = useAppContext();
   return (
-    <div className="m-2 md:m-10 mb-10 mt-24 mx-2 md:mx-9 p-2 pb-10 md:p-10 bg-white rounded-3xl">
+    <div className="m-2 md:m-10 mb-10 mt-24 mx-2 md:mx-9 p-2 pb-10 md:p-10 dark:bg-secondary-dark-bg bg-white rounded-3xl">
       <Header category="App" title="Color Picker" />
       <div className="text-center">
-        <div id="preview" />
+        {/* <div id="preview" /> */}
+        <div
+          className="md:w-1/2 w-5/6 mb-10 rounded-md p-5 text-white text-center m-auto"
+          style={{ background: currentColor }}
+        >
+          <p className="m-auto block text-lg">
+            Current Theme : <b>"{currentColor}"</b>
+          </p>
+        </div>
         <div className="flex justify-center items-center gap-20 flex-wrap">
           <div>
-            <p className="text-2xl font-semibold mt-2 mb-4">Inline Pallete</p>
+            <p className="text-2xl  text-white font-semibold mt-2 mb-4">
+              Inline Pallete
+            </p>
             <CustomColorPicker id="inline-palette" mode="Palette" />
           </div>
           <div>
-            <p className="text-2xl font-semibold mt-2 mb-4">Inline Picker</p>
+            <p className="text-2xl text-white font-semibold mt-2 mb-4">
+              Inline Picker
+            </p>
             <CustomColorPicker id="inline-picker" mode="Picker" />
           </div>
         </div>

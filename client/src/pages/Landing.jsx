@@ -1,7 +1,7 @@
 import React from "react";
 import logoLight from "../utils/img/logolight.jpg";
 import logoDark from "../utils/img/logodark.jpg";
-import { useStateContext } from "../context/ContextProvider";
+import { useAppContext } from "../context/appContext";
 import { quotes } from "../data/dummy";
 import Button from "../components/Button";
 import { Link } from "react-router-dom";
@@ -9,7 +9,7 @@ import SetTheme from "../components/SetTheme";
 import Fader from "../components/Fader";
 
 const Landing = () => {
-  const { currentColor, currentMode } = useStateContext();
+  const { currentColor, currentMode } = useAppContext();
   return (
     <div className={currentMode === "Dark" ? "dark" : ""}>
       <div className="dark:bg-secondary-dark-bg h-screen">

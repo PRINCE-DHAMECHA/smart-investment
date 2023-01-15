@@ -1,16 +1,14 @@
 import React from "react";
-import { MdOutlineCancel } from "react-icons/md";
-import { AiOutlineClose } from "react-icons/ai";
 import { RiCloseFill } from "react-icons/ri";
 import { BsCheck } from "react-icons/bs";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 
 import { themeColors } from "../data/dummy";
-import { useStateContext } from "../context/ContextProvider";
+import { useAppContext } from "../context/appContext";
 
 const ThemeSettings = () => {
   const { setColor, setMode, currentMode, currentColor, setThemeSettings } =
-    useStateContext();
+    useAppContext();
 
   return (
     <div className="bg-half-transparent w-screen fixed nav-item top-0 right-0">
@@ -39,7 +37,6 @@ const ThemeSettings = () => {
               onChange={setMode}
               checked={currentMode === "Light"}
             />
-            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
             <label htmlFor="light" className="ml-2 text-md cursor-pointer">
               Light
             </label>
@@ -54,7 +51,6 @@ const ThemeSettings = () => {
               className="cursor-pointer"
               checked={currentMode === "Dark"}
             />
-            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
             <label htmlFor="dark" className="ml-2 text-md cursor-pointer">
               Dark
             </label>

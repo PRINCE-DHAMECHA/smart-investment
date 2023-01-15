@@ -1,11 +1,11 @@
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 import React from "react";
 import { FiSettings } from "react-icons/fi";
-import { useStateContext } from "../context/ContextProvider";
+import { useAppContext } from "../context/appContext";
 import ThemeSettings from "./ThemeSettings";
 
 const SetTheme = () => {
-  const { themeSettings, setThemeSettings, currentColor } = useStateContext();
+  const { themeSettings, setThemeSettings, currentColor } = useAppContext();
   return (
     <>
       <div className="fixed right-4 bottom-4" style={{ zIndex: "1000" }}>

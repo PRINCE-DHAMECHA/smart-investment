@@ -1,11 +1,11 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import { useStateContext } from "../context/ContextProvider";
+import { useAppContext } from "../context/appContext";
 import { Navbar, Sidebar } from "../components";
 import SetTheme from "../components/SetTheme";
 
 const Demo = () => {
-  const { activeMenu } = useStateContext();
+  const { activeMenu } = useAppContext();
   return (
     <>
       <div>

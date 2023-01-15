@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { AiOutlineMenu, AiOutlineUser } from "react-icons/ai";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
-import { useStateContext } from "../context/ContextProvider";
 import { useAppContext } from "../context/appContext";
 import { NavLink } from "react-router-dom";
 
@@ -23,9 +22,14 @@ const NavButton = ({ title, cunstomFunc, icon, color, dotColor }) => (
 );
 
 const Navbar = () => {
-  const { activeMenu, setActiveMenu, screenSize, setScreenSize, currentColor } =
-    useStateContext();
-  const { logoutUser } = useAppContext();
+  const {
+    logoutUser,
+    activeMenu,
+    setActiveMenu,
+    screenSize,
+    setScreenSize,
+    currentColor,
+  } = useAppContext();
   useEffect(() => {
     const handleResize = () => setScreenSize(window.innerWidth);
     window.addEventListener("resize", handleResize);

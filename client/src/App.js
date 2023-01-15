@@ -1,17 +1,16 @@
-import { BrowserRouter, Routes, Route, IndexRoute } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Landing from "./pages/Landing";
 import Register from "./pages/Register";
 import MarketView from "./pages/MarketView";
-import { useStateContext } from "./context/ContextProvider";
 import Utilities from "./pages/Utilities";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import ColorPicker from "./pages/ColorPicker";
 import BuyStock from "./components/BuyStock";
 import Portfolio from "./pages/Portfolio";
+import { useAppContext } from "./context/appContext";
 
 function App() {
-  const { themeSettings, setThemeSettings, currentColor } = useStateContext();
-  const { currentMode } = useStateContext();
+  const { currentMode } = useAppContext();
   return (
     <div className={currentMode === "Dark" ? "dark" : ""}>
       <BrowserRouter>

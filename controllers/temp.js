@@ -16,10 +16,8 @@ const buy = async (req, res) => {
     throw new UnAuthenticatedError("No User Found");
   }
   checkUser(req.user, user._id);
-  // console.log(1, user);
   let wallet = user["wallet"];
   if (wallet < quantity * price) {
-    // console.log(3);
     throw new BadRequestError("Not Enough Balance In Your Demate Account");
   }
   let newWallet = parseFloat(wallet - price * quantity);
@@ -27,14 +25,12 @@ const buy = async (req, res) => {
 
   const test = await Share.findOne({ ownerName, stockName });
   if (test) {
-    // console.log(10, req.user, test.createdBy);
     checkUser(req.user, test.createdBy);
     price =
       (parseFloat(test["price"]) * parseFloat(test["quantity"]) +
         parseFloat(price) * parseFloat(quantity)) /
       (parseFloat(test["quantity"]) + parseFloat(quantity));
     quantity = Number(quantity) + Number(test["quantity"]);
-    // console.log(6, price, quantity);
     const updateShare = await Share.findOneAndUpdate(
       { ownerName, stockName },
       { ownerName, stockName, price, quantity }
@@ -50,7 +46,6 @@ const buy = async (req, res) => {
   } else {
     price = parseFloat(price);
     quantity = Number(quantity);
-    // console.log(8, price, quantity);
     const newShare = await Share.create({
       ownerName,
       stockName,
@@ -96,7 +91,6 @@ const sell = async (req, res) => {
     quantity = newQuantity;
     const sellPrice = price;
     price = Number(test["price"]);
-    // console.log(newQuantity);
     if (quantity <= 0) {
       const removeShare = await Share.findOneAndRemove({
         ownerName,
@@ -104,7 +98,6 @@ const sell = async (req, res) => {
       })
         .then(() => res.status(StatusCodes.OK))
         .catch((e) => {
-          // console.log(e);
           throw new BadRequestError("Something Went Wrong");
         });
     } else {
@@ -118,7 +111,6 @@ const sell = async (req, res) => {
         });
     }
     quantity = oldQuantity;
-    // console.log(quantity);
 
     let newWallet = parseFloat(user["wallet"] + sellPrice * quantity);
     newWallet = newWallet.toFixed(2);
@@ -142,11 +134,9 @@ const getShare = async (req, res) => {
 };
 
 const getUser = (req, res) => {
-  // console.log(req.user);
   const queryObject = {
     _id: req.user.userId,
   };
-  // res.json(req.user.userId);
   User.find(queryObject, (err, data) => {
     if (err) {
       throw new BadRequestError("Something Went Wrong");

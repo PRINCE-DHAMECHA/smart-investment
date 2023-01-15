@@ -10,17 +10,14 @@ export const links = [
       {
         name: "Portfolio",
         icon: <CgProfile />,
-        active: 1,
       },
       {
         name: "MarketView",
         icon: <AiOutlineBarChart />,
-        active: 0,
       },
       {
         name: "ThemePicker",
         icon: <FiEdit />,
-        active: 0,
       },
     ],
   },
