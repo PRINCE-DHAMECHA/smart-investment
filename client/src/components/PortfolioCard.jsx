@@ -91,7 +91,7 @@ const MarketViewCard = ({ stockname, k, quantity, buyPrice, buyTime }) => {
               <AiOutlineArrowDown
                 className="hidden md:flex"
                 style={{
-                  color: "#ff0d00",
+                  color: "#fc4e41",
                   marginTop: "8px",
                   fontSize: "20px",
                 }}
@@ -102,7 +102,7 @@ const MarketViewCard = ({ stockname, k, quantity, buyPrice, buyTime }) => {
             style={
               TotalchangeInPrice >= 0
                 ? { color: "#00b700" }
-                : { color: "#ff0d00" }
+                : { color: "#fc4e41" }
             }
             className="md:text-2xl  text-xl font-normal tracking-wide "
           >
@@ -127,7 +127,7 @@ const MarketViewCard = ({ stockname, k, quantity, buyPrice, buyTime }) => {
               style={
                 TotalchangeInPrice >= 0
                   ? { color: "#00b700" }
-                  : { color: "#ff0d00" }
+                  : { color: "#fc4e41" }
               }
               className="md:hidden flex ml-2 justify-end text-sm lg:text-lg dark:text-white"
             >
@@ -139,7 +139,7 @@ const MarketViewCard = ({ stockname, k, quantity, buyPrice, buyTime }) => {
               ) : (
                 <AiOutlineArrowDown
                   style={{
-                    color: "#ff0d00",
+                    color: "#fc4e41",
                     fontSize: "15px",
                   }}
                 />

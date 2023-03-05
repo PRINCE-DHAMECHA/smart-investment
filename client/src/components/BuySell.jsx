@@ -86,7 +86,7 @@ const BuySell = ({ pri }) => {
                   onClick={() =>
                     setisAction(isAction == "Buy" ? "Sell" : "Buy")
                   }
-                  className="flex justify-around m-auto w-[102px] h-10 bg-red-600 rounded-full peer  peer-focus:ring-green-300  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[3px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-9 after:w-12 after:transition-all peer-checked:bg-green-600 text-white"
+                  className="flex justify-around m-auto w-[102px] h-10 bg-red-500 rounded-full peer  peer-focus:ring-green-300  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[3px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-9 after:w-12 after:transition-all peer-checked:bg-green-600 text-white"
                 >
                   <p className="m-auto">Buy</p>
                   <p className="m-auto">Sell</p>
