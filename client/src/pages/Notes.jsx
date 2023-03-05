@@ -12,7 +12,6 @@ const Notes = () => {
   const { authFetch, currentColor, user } = useAppContext();
   useEffect(() => {
     authFetch("loan/getNotes").then((data) => {
-      console.log(data.data);
       setNotes(data.data);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

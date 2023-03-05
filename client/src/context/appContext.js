@@ -40,6 +40,7 @@ const AppProvider = ({ children }) => {
   const [themeSettings, setThemeSettings] = useState(false);
   const [activeStockId, setactiveStockId] = useState(null);
   const [activeStockName, setactiveStockName] = useState(null);
+  const [activeLoan, setActiveLoan] = useState(null);
   const setMode = (e) => {
     setCurrentMode(e.target.value);
     localStorage.setItem("themeMode", e.target.value);
@@ -49,6 +50,14 @@ const AppProvider = ({ children }) => {
     localStorage.setItem("stockId", k);
     localStorage.setItem("stockName", stockname);
   };
+  const setLoan = (data, outstanding, date) => {
+    localStorage.setItem("lender", data.lender);
+    localStorage.setItem("principal", data.principal);
+    localStorage.setItem("interest", data.interest);
+    localStorage.setItem("id", data._id);
+    localStorage.setItem("outstanding", outstanding);
+    localStorage.setItem("date", date);
+  };
   const setColor = (color) => {
     setCurrentColor(color);
     localStorage.setItem("colorMode", color);
@@ -57,6 +66,19 @@ const AppProvider = ({ children }) => {
   const handleClick = (clicked) => {
     setisClicked({ ...initialState, [clicked]: true });
   };
+
+  const maxMin = [
+    { name: "Prince Airlines", max: "1252.59", min: "1131.46" },
+    { name: "Krishna Zoo", max: "634.13", min: "591.39" },
+    { name: "Kanan Ielts", max: "2750.2", min: "2537.74" },
+    { name: "Adarsh Gaming", max: "6188.36", min: "5805.23" },
+    { name: "Namra Pharma", max: "2533.88", min: "2358.07" },
+    { name: "Aditya Studio", max: "469.73", min: "433.43" },
+    { name: "Parshwa Electronics", max: "1602.38", min: "1472.51" },
+    { name: "Darshana Music", max: "5210.58", min: "4930.96" },
+    { name: "Khushali Ice-Cream", max: "101.66", min: "93.11" },
+    { name: "Honey Dresses", max: "10369.66", min: "9592.86" },
+  ];
 
   // axios
   const authFetch = axios.create({
@@ -176,6 +198,9 @@ const AppProvider = ({ children }) => {
         setStockId,
         activeStockName,
         setactiveStockName,
+        activeLoan,
+        setActiveLoan,
+        setLoan,
       }}
     >
       {children}

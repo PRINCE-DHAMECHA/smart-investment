@@ -26,10 +26,6 @@ const UserSchema = new mongoose.Schema({
     minlength: 6,
     select: false,
   },
-  wallet: {
-    type: Number,
-    default: 500000,
-  },
   balance: {
     type: Number,
     default: 1000000,

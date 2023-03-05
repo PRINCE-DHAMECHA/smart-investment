@@ -1,8 +1,14 @@
 import React from "react";
-import { AiOutlineBarChart, AiFillHome } from "react-icons/ai";
+import {
+  AiOutlineBarChart,
+  AiFillHome,
+  AiOutlineAreaChart,
+  AiFillBank,
+} from "react-icons/ai";
 import { FiEdit } from "react-icons/fi";
 import { CgProfile } from "react-icons/cg";
 import { TbNotes } from "react-icons/tb";
+import { FaGratipay } from "react-icons/fa";
 
 export const links = [
   {
@@ -14,17 +20,37 @@ export const links = [
         icon: <AiFillHome />,
       },
       {
-        name: "ThemePicker",
+        name: "Theme Picker",
         to: "ThemePicker",
         icon: <FiEdit />,
+      },
+      {
+        name: "Stocks",
+        to: "stockHome",
+        icon: <AiOutlineAreaChart />,
       },
     ],
   },
   {
-    title: "Stocks",
+    title: "Account",
     links: [
       {
-        name: "Portfolio",
+        name: "Accounts",
+        to: "accounts",
+        icon: <CgProfile />,
+      },
+      {
+        name: "Tips",
+        to: "tips",
+        icon: <FaGratipay />,
+      },
+    ],
+  },
+  {
+    title: "Virtual Stocks",
+    links: [
+      {
+        name: "Desk",
         to: "Portfolio",
         icon: <CgProfile />,
       },
@@ -39,9 +65,14 @@ export const links = [
     title: "Loans",
     links: [
       {
-        name: "Notes",
-        to: "notes",
+        name: "Desk",
+        to: "loanDesk",
         icon: <TbNotes />,
+      },
+      {
+        name: "Loans",
+        to: "notes",
+        icon: <AiFillBank />,
       },
     ],
   },
@@ -87,41 +118,51 @@ export const MarketViewData = [
   {
     stockName: "Prince Airlines",
     key: 1,
+    sector: "transport",
   },
   {
     stockName: "Krishna Zoo",
     key: 2,
+    sector: "Entertainment",
   },
   {
     stockName: "Kanan Ielts",
     key: 3,
+    sector: "Education",
   },
   {
     stockName: "Adarsh Gaming",
     key: 4,
+    sector: "Entertainment",
   },
   {
     stockName: "Namra Pharma",
     key: 5,
+    sector: "pharmaceutical",
   },
   {
     stockName: "Aditya Studio",
     key: 6,
+    sector: "Art",
   },
   {
     stockName: "Parshwa Electrics",
     key: 7,
+    sector: "Energy",
   },
   {
     stockName: "Darshana Music",
     key: 8,
+    sector: "Entertainment",
   },
   {
     stockName: "Khushali Ice-Cream",
     key: 9,
+    sector: "FMCG",
   },
   {
     stockName: "Honey Dresses",
     key: 10,
+    sector: "Art",
   },
 ];

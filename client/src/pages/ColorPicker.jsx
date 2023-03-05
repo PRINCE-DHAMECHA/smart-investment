@@ -34,7 +34,7 @@ const ColorPicker = () => {
           className="md:w-1/2 w-5/6 mb-10 rounded-md p-5 text-white text-center m-auto"
           style={{ borderWidth: "2px", borderColor: currentColor }}
         >
-          <p className="m-auto block text-lg">
+          <p className="m-auto block text-lg text-black dark:text-white">
             Current Theme : <b>{currentColor}</b>
           </p>
         </div>

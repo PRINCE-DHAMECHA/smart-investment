@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineMenu, AiOutlineUser, AiOutlineLogin } from "react-icons/ai";
 import { useAppContext } from "../context/appContext";
 import { NavLink } from "react-router-dom";
@@ -16,6 +16,7 @@ const NavButton = ({ cunstomFunc, icon, color }) => (
 );
 
 const Navbar = () => {
+  const [myText, setmyText] = useState("Logout");
   const {
     logoutUser,
     activeMenu,
@@ -66,9 +67,15 @@ const Navbar = () => {
                   borderRadius: "10px",
                 }}
                 className={`text-lg text-white px-4 py-1 hover:drop-shadow-xl `}
-                onClick={logoutUser}
+                onClick={() => {
+                  setmyText("Logging Out...");
+                  setTimeout(() => {
+                    logoutUser();
+                    setmyText("Login");
+                  }, 1000);
+                }}
               >
-                logout
+                {myText}
               </button>
             </div>
           </div>
@@ -78,7 +85,7 @@ const Navbar = () => {
               type="button"
               style={{ backgroundColor: currentColor, borderRadius: "10px" }}
               className={
-                "p-3 px-5 hover:drop-shadow-xl text-white flex justify-center gap-2"
+                "py-1 mt-2 px-5 hover:drop-shadow-xl text-white flex justify-center gap-2"
               }
             >
               <span>Login</span>

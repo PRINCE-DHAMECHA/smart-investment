@@ -21,6 +21,9 @@ const ShareSchema = new mongoose.Schema({
   quantity: {
     type: Number,
   },
+  buyTime: {
+    type: Date,
+  },
   createdBy: {
     type: mongoose.Types.ObjectId,
     ref: "User",

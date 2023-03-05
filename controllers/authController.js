@@ -12,15 +12,19 @@ const register = async (req, res) => {
   if (userAlreadyExists) {
     throw new BadRequestError("Email already in use");
   }
-  const user = await User.create({ name, email, password });
-  const token = user.createJWT();
-  res.status(StatusCodes.CREATED).json({
-    user: {
-      email: user.email,
-      name: user.name,
-    },
-    token,
-  });
+  try {
+    const user = await User.create({ name, email, password });
+    const token = user.createJWT();
+    res.status(StatusCodes.CREATED).json({
+      user: {
+        email: user.email,
+        name: user.name,
+      },
+      token,
+    });
+  } catch (e) {
+    throw new BadRequestError("Something Went Wrong :(");
+  }
 };
 const login = async (req, res) => {
   const { email, password } = req.body;
@@ -36,9 +40,13 @@ const login = async (req, res) => {
   if (!isPasswordCorrect) {
     throw new UnAuthenticatedError("Invalid Credentials");
   }
-  const token = user.createJWT();
-  user.password = undefined;
-  res.status(StatusCodes.OK).json({ user, token });
+  try {
+    const token = user.createJWT();
+    user.password = undefined;
+    res.status(StatusCodes.OK).json({ user, token });
+  } catch (e) {
+    throw new BadRequestError("Something Went Wrong :(");
+  }
 };
 
 export { register, login };

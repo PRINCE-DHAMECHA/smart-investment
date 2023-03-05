@@ -49,10 +49,22 @@ const MarketViewCard = ({ stockname, k }) => {
     (((prices[Math.floor(val / 3)] - prices[0]) / prices[0]) * 100).toFixed(2)
   );
   const { currentColor, currentMode, setStockId } = useAppContext();
+  let r = "0x" + currentColor[1] + currentColor[2];
+  let g = "0x" + currentColor[3] + currentColor[4];
+  let b = "0x" + currentColor[5] + currentColor[6];
+  r = +((r / 255) * 100).toFixed(1);
+  g = +((g / 255) * 100).toFixed(1);
+  b = +((b / 255) * 100).toFixed(1);
   return (
     <div
-      style={currentMode !== "Dark" ? { background: "rgb(250,251,251)" } : {}}
-      className="rounded-lg border border-gray-100 cursor-pointer shadow-md dark:bg-gray-700 dark:border-gray-700 hover:border-y-2"
+      style={{
+        // background: `linear-gradient(120deg,${rgba2} 20%,${rgba1})`,
+        borderLeft:
+          currentMode !== "Dark"
+            ? `4px solid ${currentColor}`
+            : "4px solid white",
+      }}
+      className="rounded-lg border border-gray-100 cursor-pointer dark:shadow-md shadow-sm dark:bg-gray-700 dark:border-gray-700 dark:hover:shadow-xl hover:shadow-md"
     >
       <div className="md:p-5 p-3">
         <div className="flex justify-between md:px-1 m-auto">
@@ -62,8 +74,8 @@ const MarketViewCard = ({ stockname, k }) => {
           <p
             style={
               TotalchangeInPrice >= 0
-                ? { color: "#00ff11" }
-                : { color: "#ff0d00" }
+                ? { color: "#00b700" }
+                : { color: "#fc4e41" }
             }
             className="md:text-2xl  text-xl font-normal tracking-wide "
           >
@@ -76,10 +88,10 @@ const MarketViewCard = ({ stockname, k }) => {
             onClick={() => setStockId(id, stockname)}
             style={
               TotalchangeInPrice >= 0
-                ? { background: currentColor, borderColor: "#00cb0e" }
-                : { background: currentColor, borderColor: "#ff0d00" }
+                ? { background: currentColor }
+                : { background: currentColor }
             }
-            className="flex items-center md:mt-4 mt-4 md:py-2 px-4 py-2 md:px-4 text-sm text-md text-center rounded-lg  focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-80 text-white font-light tracking-widest hover:border-2"
+            className="flex items-center md:mt-4 mt-4 md:py-2 px-4 py-2 md:px-4 text-sm text-md text-center rounded-lg  focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-80 text-white font-light tracking-widest hover:skew-x-2"
           >
             Buy / Sell
           </Link>

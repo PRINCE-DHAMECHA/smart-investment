@@ -14,6 +14,8 @@ import connectDB from "./db/connect.js";
 import authRouter from "./routes/authRoutes.js";
 import shareRouter from "./routes/shareRoutes.js";
 import loanRouter from "./routes/loanRouter.js";
+import stockRouter from "./routes/stockRoute.js";
+import transactionRouter from "./routes/transactionRoute.js";
 
 import notFoundMiddleware from "./middlewares/not-found.js";
 import errorHandlerMiddleware from "./middlewares/error-handler.js";
@@ -25,6 +27,8 @@ app.use(express.json());
 app.use("/auth", authRouter);
 app.use("/share", authenticateUser, shareRouter);
 app.use("/loan", authenticateUser, loanRouter);
+app.use("/account", authenticateUser, transactionRouter);
+app.use("/stock", stockRouter);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));

@@ -3,9 +3,12 @@ import User from "../models/User.js";
 import { StatusCodes } from "http-status-codes";
 import checkUser from "../Utils/checkUser.js";
 import { BadRequestError, UnAuthenticatedError } from "../errors/index.js";
+import Transaction from "../models/Transaction.js";
 
 const buy = async (req, res) => {
   let { ownerName, stockName, price, quantity } = req.body;
+  let tempPrice = price;
+  let tempQuantity = quantity;
   const createdBy = req.user.userId;
   if (!ownerName || !stockName || !price || !quantity) {
     throw new BadRequestError("Please Provide All Values!!");
@@ -18,7 +21,7 @@ const buy = async (req, res) => {
     throw new UnAuthenticatedError("No User Found!!");
   }
   checkUser(req.user, user._id);
-  let wallet = user["wallet"];
+  let wallet = user["balance"];
   if (wallet < quantity * price) {
     throw new BadRequestError("Not Enough Balance In Your Demate Account!!");
   }
@@ -42,10 +45,21 @@ const buy = async (req, res) => {
         const updateUser2 = await User.updateOne(
           { name: ownerName },
           {
-            wallet: newWallet,
+            balance: newWallet,
           }
-        ).then(() => {
-          res.json("Buy Success!!");
+        ).then(async (data) => {
+          const transaction = await Transaction.create({
+            giver: ownerName,
+            receiver: "Stock-Market",
+            amount: (price * quantity).toFixed(2),
+            transactionTime: new Date(),
+            isStockTransaction: true,
+            stockName: stockName,
+            price: tempPrice,
+            quantity: tempQuantity,
+          }).then(() => {
+            res.json("Buy Success!!");
+          });
         });
       })
       .catch(() => {
@@ -60,16 +74,28 @@ const buy = async (req, res) => {
       price,
       quantity,
       createdBy,
+      buyTime: new Date(),
     })
       .then(async (newShare) => {
         res.status(StatusCodes.OK);
         const updateUser2 = await User.updateOne(
           { name: ownerName },
           {
-            wallet: newWallet,
+            balance: newWallet,
           }
-        ).then(() => {
-          res.json("Buy Success!!");
+        ).then(async (data) => {
+          const transaction = await Transaction.create({
+            giver: ownerName,
+            receiver: "Stock-Market",
+            amount: (price * quantity).toFixed(2),
+            transactionTime: new Date(),
+            isStockTransaction: true,
+            stockName: stockName,
+            price: tempPrice,
+            quantity: tempQuantity,
+          }).then(() => {
+            res.json("Buy Success!!");
+          });
         });
       })
       .catch((e) => {
@@ -79,6 +105,8 @@ const buy = async (req, res) => {
 };
 const sell = async (req, res) => {
   let { ownerName, stockName, price, quantity } = req.body;
+  let tempPrice = price;
+  let tempQuantity = quantity;
   if (!ownerName || !stockName || !price || !quantity) {
     throw new BadRequestError("Please Provide All Values!!");
   }
@@ -108,15 +136,26 @@ const sell = async (req, res) => {
       })
         .then(async () => {
           quantity = oldQuantity;
-          let newWallet = parseFloat(user["wallet"] + sellPrice * quantity);
+          let newWallet = parseFloat(user["balance"] + sellPrice * quantity);
           newWallet = newWallet.toFixed(2);
           const updateUser2 = await User.updateOne(
             { name: ownerName },
             {
-              wallet: newWallet,
+              balance: newWallet,
             }
-          ).then(() => {
-            res.status(StatusCodes.OK).json("Sell Success!!");
+          ).then(async (data) => {
+            const transaction = await Transaction.create({
+              giver: "Stock-Market",
+              receiver: ownerName,
+              amount: (sellPrice * quantity).toFixed(2),
+              transactionTime: new Date(),
+              isStockTransaction: true,
+              stockName: stockName,
+              price: tempPrice,
+              quantity: tempQuantity,
+            }).then(() => {
+              res.status(StatusCodes.OK).json("Sell Success!!");
+            });
           });
         })
         .catch((e) => {
@@ -129,15 +168,26 @@ const sell = async (req, res) => {
       )
         .then(async () => {
           quantity = oldQuantity;
-          let newWallet = parseFloat(user["wallet"] + sellPrice * quantity);
+          let newWallet = parseFloat(user["balance"] + sellPrice * quantity);
           newWallet = newWallet.toFixed(2);
           const updateUser2 = await User.updateOne(
             { name: ownerName },
             {
-              wallet: newWallet,
+              balance: newWallet,
             }
-          ).then(() => {
-            res.status(StatusCodes.OK).json("Sell Success!!");
+          ).then(async (data) => {
+            const transaction = await Transaction.create({
+              giver: "Stock-Market",
+              receiver: ownerName,
+              amount: (sellPrice * quantity).toFixed(2),
+              transactionTime: new Date(),
+              isStockTransaction: true,
+              stockName: stockName,
+              price: tempPrice,
+              quantity: tempQuantity,
+            }).then(() => {
+              res.status(StatusCodes.OK).json("Sell Success!!");
+            });
           });
         })
         .catch(() => {

@@ -3,7 +3,14 @@ import { Link } from "react-router-dom";
 import { AiOutlineArrowUp, AiOutlineArrowDown } from "react-icons/ai";
 import { useAppContext } from "../context/appContext";
 
-const MarketViewCard = ({ stockname, k, quantity, buyPrice }) => {
+const MarketViewCard = ({ stockname, k, quantity, buyPrice, buyTime }) => {
+  let time = new Date(buyTime).toLocaleString(undefined, {
+    timeZone: "Asia/Kolkata",
+  });
+  let timeData = time.split("/");
+  let buyDay = timeData[1];
+  let BuyMonth = timeData[0];
+  let BuyYear = timeData[2].slice(0, 4);
   const id = k;
   const date = new Date();
   const day = date.getDate();
@@ -50,10 +57,16 @@ const MarketViewCard = ({ stockname, k, quantity, buyPrice }) => {
   const { currentColor, currentMode, setStockId } = useAppContext();
   return (
     <div
-      style={currentMode !== "Dark" ? { background: "rgb(250,251,251)" } : {}}
-      className="rounded-lg border border-gray-100 cursor-pointer shadow-md dark:bg-gray-700 dark:border-gray-700 hover:border-y-2"
+      style={{
+        // background: `linear-gradient(120deg,${rgba2} 20%,${rgba1})`,
+        borderLeft:
+          currentMode !== "Dark"
+            ? `4px solid ${currentColor}`
+            : "4px solid white",
+      }}
+      className="rounded-lg border border-gray-100 cursor-pointer shadow-sm dark:shadow-md dark:bg-gray-700 dark:border-gray-700 dark:hover:shadow-xl hover:shadow-md"
     >
-      <div className="p-4">
+      <div className="p-3">
         <div className="flex justify-between md:px-1 md:pt-2  m-auto">
           <div className="flex flex-row items-center justify-center">
             <span className="md:text-xl md:font font-semibold tracking-tight text-gray-900 dark:text-white">
@@ -62,8 +75,8 @@ const MarketViewCard = ({ stockname, k, quantity, buyPrice }) => {
             <div
               style={
                 TotalchangeInPrice >= 0
-                  ? { color: "#00ff11" }
-                  : { color: "#ff0d00" }
+                  ? { color: "#00b700" }
+                  : { color: "##fc4e41" }
               }
               className="hidden md:flex ml-2 text-sm lg:text-lg dark:text-white"
             >
@@ -72,7 +85,7 @@ const MarketViewCard = ({ stockname, k, quantity, buyPrice }) => {
             {TotalchangeInPrice >= 0 ? (
               <AiOutlineArrowUp
                 className="-mt-2 hidden md:flex"
-                style={{ color: "#00ff11", fontSize: "20px" }}
+                style={{ color: "#00b700", fontSize: "20px" }}
               />
             ) : (
               <AiOutlineArrowDown
@@ -88,7 +101,7 @@ const MarketViewCard = ({ stockname, k, quantity, buyPrice }) => {
           <p
             style={
               TotalchangeInPrice >= 0
-                ? { color: "#00ff11" }
+                ? { color: "#00b700" }
                 : { color: "#ff0d00" }
             }
             className="md:text-2xl  text-xl font-normal tracking-wide "
@@ -102,18 +115,18 @@ const MarketViewCard = ({ stockname, k, quantity, buyPrice }) => {
             onClick={() => setStockId(id, stockname)}
             style={
               TotalchangeInPrice >= 0
-                ? { background: currentColor, borderColor: "#00cb0e" }
-                : { background: currentColor, borderColor: "#ff0d00" }
+                ? { background: currentColor }
+                : { background: currentColor }
             }
-            className="flex items-center md:mt-4 mt-4 md:py-2 px-4 py-2 md:px-4 text-sm text-md text-center rounded-lg  focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-80 text-white font-light tracking-widest hover:border-2"
+            className="flex items-center md:mt-4 mt-4 px-4 py-0 md:px-4 text-sm text-md text-center rounded-lg  focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-80 text-white font-light tracking-widest hover:skew-x-2"
           >
             Buy / Sell
           </Link>
-          <div className="flex lg:flex-row flex-col justify-end text-right">
+          <div className="flex lg:flex-col flex-col justify-end text-right">
             <div
               style={
                 TotalchangeInPrice >= 0
-                  ? { color: "#00ff11" }
+                  ? { color: "#00b700" }
                   : { color: "#ff0d00" }
               }
               className="md:hidden flex ml-2 justify-end text-sm lg:text-lg dark:text-white"
@@ -121,7 +134,7 @@ const MarketViewCard = ({ stockname, k, quantity, buyPrice }) => {
               {PerChangeInPrice}%
               {TotalchangeInPrice >= 0 ? (
                 <AiOutlineArrowUp
-                  style={{ color: "#00ff11", fontSize: "15px" }}
+                  style={{ color: "#00b700", fontSize: "15px" }}
                 />
               ) : (
                 <AiOutlineArrowDown
@@ -132,12 +145,12 @@ const MarketViewCard = ({ stockname, k, quantity, buyPrice }) => {
                 />
               )}
             </div>
-            <span className="lg:mb-5 md:text-base text-sm text-right  text-gray-900 dark:text-white">
+            <span className="md:text-base text-sm text-right  text-gray-900 dark:text-white">
               Avg : {buyPrice.toFixed(2)}
             </span>
-            <div className="flex flex-row justify-end">
-              <span className="lg:mb-5 text-right md:text-base text-sm  text-gray-900 dark:text-white">
-                (q : {quantity})
+            <div className="flex flex-row justify-center">
+              <span className="md:mb-3 text-right md:text-base text-sm  text-gray-900 dark:text-white">
+                (Q : {quantity} - {buyDay}/{BuyMonth}/{BuyYear} )
               </span>
             </div>
           </div>
