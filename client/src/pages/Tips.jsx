@@ -61,17 +61,16 @@ const Tips = () => {
             </div>
           </div>
         ) : (
-          <div className="flex flex-col justify-center dark:text-white gap-10">
-            <p className="text-xl font-medium">
-              Current Balance: {currentBalance}
+          <div className="flex flex-col justify-center dark:text-white gap-5">
+            <p className="text-2xl font-medium">
+              Current Balance: {currentBalance} &#8377;
             </p>
             {!isTipBought ? (
               <div>
-                <p className="text-xl dark:text-white font-medium">
-                  Buy Tip At Just 100rs
+                <p className="text-2xl dark:text-white font-medium m-5">
+                  Buy Tip At Just 100 &#8377;
                 </p>
                 <button
-                  value="print"
                   style={{
                     backgroundColor: currentColor,
                     borderRadius: "10px",
@@ -84,7 +83,7 @@ const Tips = () => {
               </div>
             ) : (
               <div className="dark:text-white">
-                <p className="text-xl font-medium">Tip Bought!!</p>
+                <p className="text-2xl font-medium">Tip Bought!!</p>
                 <div
                   style={{
                     borderLeft: `2px solid ${currentColor}`,
@@ -93,9 +92,11 @@ const Tips = () => {
                   }}
                   className="flex lg:w-5/12 lg:m-auto lg:mt-10 mx-5 my-4 p-3 text-lg font-normal flex-col gap-2 mt-5"
                 >
-                  <p>Buy: {MarketViewData[currentBuy.stockIndex].stockName} </p>
-                  <p>current price: {currentBuy["currentPrice"]}</p>
-                  <p>Target high: {currentBuy["maxPrice"]}</p>
+                  <p style={{ color: "#7ced65" }}>
+                    Buy {MarketViewData[currentBuy.stockIndex].stockName}{" "}
+                  </p>
+                  <p>current price: {currentBuy["currentPrice"]} &#8377;</p>
+                  <p>Target high: {currentBuy["maxPrice"]} &#8377;</p>
                   <p>
                     Possible Gain:{" "}
                     {(currentBuy["possibleGain"] * 100).toFixed(2)}%

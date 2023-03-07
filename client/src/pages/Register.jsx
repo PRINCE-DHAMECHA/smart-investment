@@ -31,7 +31,7 @@ export default function Register() {
       setmyLoading(false);
     }, 1000);
     if (user) {
-      navigate("/portfolio");
+      navigate("/accounts");
     }
     return () => {
       clearTimeout(t);

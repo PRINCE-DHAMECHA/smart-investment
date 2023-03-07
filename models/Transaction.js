@@ -33,6 +33,18 @@ const TransactionSchema = new mongoose.Schema({
   quantity: {
     type: Number,
   },
+  principal: {
+    type: Number,
+  },
+  interest: {
+    type: Number,
+  },
+  isRepay: {
+    type: Boolean,
+  },
+  tax: {
+    type: Number,
+  },
 });
 
 export default mongoose.model("Transaction", TransactionSchema);

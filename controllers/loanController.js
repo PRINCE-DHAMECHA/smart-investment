@@ -8,6 +8,7 @@ import checkUser from "../Utils/checkUser.js";
 
 const createNote = async (req, res) => {
   const { lender, principal, interest } = req.body;
+  console.log(lender, principal, interest);
   try {
     if (!lender || !principal || !interest) {
       throw new BadRequestError("Please Provide All Values!!");
@@ -31,7 +32,7 @@ const createNote = async (req, res) => {
 };
 
 const repayLoan = async (req, res) => {
-  const { _id, outstanding } = req.body;
+  const { _id, outstanding, principal, interest } = req.body;
   if (!_id) {
     throw new BadRequestError("Please Provide All Values!!");
   }
@@ -74,6 +75,9 @@ const repayLoan = async (req, res) => {
       amount: outstanding,
       transactionTime: new Date(),
       isStockTransaction: false,
+      principal: principal,
+      interest: interest,
+      isRepay: true,
     });
     const noteRemoved = await Loan.findByIdAndRemove({ _id });
     res.status(StatusCodes.ACCEPTED).json("Success");
@@ -97,7 +101,8 @@ const grantLoan = async (req, res) => {
   if (borrower.name === lender.name) {
     throw new BadRequestError("You Can't Give Yourself A Loan!!");
   }
-  if (borrower.balance < note.principal) {
+  let processingFees = (note.principal * 0.005).toFixed(2);
+  if (lender.balance < note.principal) {
     throw new BadRequestError(
       "Lender Currently Does Not Have Sufficient Amount Of Money :("
     );
@@ -106,14 +111,14 @@ const grantLoan = async (req, res) => {
     const newLender = await User.updateOne(
       { name: lender.name },
       {
-        balance: lender.balance - note.principal,
+        balance: lender.balance - note.principal - processingFees,
         givings: lender.givings + note.principal,
       }
     );
     const newBorrower = await User.updateOne(
       { name: borrower.name },
       {
-        balance: borrower.balance + note.principal,
+        balance: borrower.balance + note.principal - processingFees,
         borrowings: borrower.borrowings + note.principal,
       }
     );
@@ -130,6 +135,10 @@ const grantLoan = async (req, res) => {
       amount: note.principal,
       transactionTime: new Date(),
       isStockTransaction: false,
+      principal: note.principal,
+      interest: note.interest,
+      isRepay: false,
+      tax: processingFees,
     });
     const noteRemoved = await giversNote.findByIdAndRemove({ _id });
     res.status(StatusCodes.ACCEPTED).json(transaction);
@@ -183,6 +192,25 @@ const getMyNotes = async (req, res) => {
   });
 };
 
+const deleteMynote = async (req, res) => {
+  const { _id } = req.body;
+  try {
+    const note = await giversNote.findOne({ _id });
+    console.log(_id);
+    checkUser(req.user, note.createdBy);
+  } catch (e) {
+    console.log(e);
+    throw new BadRequestError("Something Went Wrong!!");
+  }
+  try {
+    const noteRemoved = await giversNote.findByIdAndRemove({ _id });
+    res.status(StatusCodes.ACCEPTED).json("Note Deleted Successfully");
+  } catch (e) {
+    console.log(e);
+    throw new BadRequestError("Something Went Wrong!!");
+  }
+};
+
 export {
   createNote,
   getNotes,
@@ -191,4 +219,5 @@ export {
   getMyBorrowings,
   getMyGivings,
   repayLoan,
+  deleteMynote,
 };

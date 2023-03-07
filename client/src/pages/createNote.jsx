@@ -7,26 +7,21 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 const CreateNote = () => {
   const { currentColor, authFetch, user } = useAppContext();
   const navigate = useNavigate();
-  const initialState = {
-    principal: "",
-    interest: "",
-  };
-  const [state, setState] = useState(initialState);
+  const [principal, setPrincipal] = useState(1000);
+  const [interest, setInterest] = useState(6);
+  const [platformFees, setPlatformFees] = useState(0);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-  const handleChange = (e) => {
-    setState({ ...state, [e.target.name]: e.target.value });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    console.log(state.principal, state.interest, user.name);
+    console.log(principal, interest, user.name);
     try {
       await authFetch.post("loan/createNote", {
         lender: user.name,
-        principal: state.principal,
-        interest: state.interest,
+        principal: principal,
+        interest: interest,
       });
       setMessage("Note Created!!");
       setLoading(false);
@@ -55,38 +50,39 @@ const CreateNote = () => {
             method="POST"
           >
             <input type="hidden" name="remember" defaultValue="true" />
-            <div className="rounded-md shadow-sm">
+            <div className="rounded-md shadow-sm dark:text-white text-left">
               <div className="mb-10 mt-10">
-                <label htmlFor="email-address" className="sr-only">
-                  Email address
-                </label>
+                <p className="pb-5 text-lg">Enter Principal</p>
                 <input
                   type="number"
-                  value={state.principal}
+                  value={principal}
                   name="principal"
-                  onChange={handleChange}
+                  onChange={(e) => setPrincipal(e.target.value)}
                   className={`appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md
-                  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-md dark:bg-slate-700 dark:text-white dark:border-slate-500 dark:focus:border-gray-300 dark:placeholder-white
-                  ${state.isMember ? "rounded-t-md" : ""}`}
+                  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-md dark:bg-slate-700 dark:text-white dark:border-slate-500 dark:focus:border-gray-300 dark:placeholder-white`}
                   placeholder="Principal"
-                  min={"0"}
+                  min={"1"}
                   required
                 />
               </div>
               <div>
-                <label htmlFor="password" className="sr-only">
-                  Password
-                </label>
+                <p className="pb-5 text-lg">Enter Interest</p>
                 <input
                   name="interest"
                   type="number"
-                  onChange={handleChange}
+                  value={interest}
+                  onChange={(e) => setInterest(e.target.value)}
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-slate-500 dark:focus:border-gray-300 placeholder-gray-500 dark:placeholder-white text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-md dark:bg-slate-700 dark:text-white"
                   placeholder="Interest"
                   max={"100"}
-                  min={"0"}
+                  min={"1"}
                   required
                 />
+              </div>
+              <div className="text-center mt-5 text-xl">
+                <p className="block m-auto">
+                  Platform Fees: {principal * 0.005}
+                </p>
               </div>
             </div>
 

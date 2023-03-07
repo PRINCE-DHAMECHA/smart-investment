@@ -69,16 +69,18 @@ const LoanDesk = () => {
         {!loading && (
           <div>
             <div className="flex dark:text-white flex-col justify-around flex-wrap xl:flex-row font-semibold md:text-2xl text-lg">
-              <p className="w-60 block m-auto py-0.5">
-                Balance: {user.balance}
+              <p className="w-64 block m-auto py-0.5">
+                Balance: {user.balance} &#8377;
               </p>
               <p className="w-60 block m-auto py-0.5">
                 Givings:{" "}
-                <span style={{ color: "#00ff11" }}>{user.givings}</span>
+                <span style={{ color: "#00ff11" }}>{user.givings} &#8377;</span>
               </p>
               <p className="w-60 block m-auto py-0.5">
                 Debt:{" "}
-                <span style={{ color: "#ff0d00" }}>{user.borrowings}</span>
+                <span style={{ color: "#ff0d00" }}>
+                  {user.borrowings} &#8377;
+                </span>
               </p>
             </div>
             <div>

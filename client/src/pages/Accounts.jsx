@@ -35,6 +35,7 @@ const Accounts = () => {
   const [stockDebit, setStockDebit] = useState(0);
   const [stockCredit, setStockCredit] = useState(0);
   const [tipCount, setTipCount] = useState(0);
+  const [taxes, setTaxes] = useState(0);
   let userName = localStorage.getItem("name");
   useEffect(async () => {
     try {
@@ -60,7 +61,8 @@ const Accounts = () => {
       loanCreditsAmount = 0,
       loanDebitsAmount = 0;
     data.reverse();
-    let tips = 0;
+    let tips = 0,
+      tempTaxes = 0;
     for (let i = 0; i < data.length; i++) {
       if (data[i].isStockTransaction) {
         setNoStockTransaction(false);
@@ -86,19 +88,24 @@ const Accounts = () => {
       if (data[i].receiver === "Tip Account") {
         tips++;
       }
+      if (data[i].receiver !== "Tip Account" && !data[i].isRepay) {
+        tempTaxes += Number(data[i].tax);
+        console.log(data[i].tax);
+      }
     }
+    setTaxes(tempTaxes.toFixed(2));
     allCredits.amount = allCreditAmount;
     allDebits.amount = allDebitAmount;
     loanCredits.amount = loanCreditsAmount;
     loanDebits.amount = loanDebitsAmount;
     shareCredits.amount = shareCreditsAmount;
     shareDebits.amount = shareDebitsAmount;
-    setAllCredit(allCreditAmount);
-    setAllDebit(allDebitAmount + tips * 100);
-    setLoanCredit(loanCreditsAmount);
-    setLoanDebit(loanDebitsAmount);
-    setStockCredit(shareCreditsAmount);
-    setStockDebit(shareDebitsAmount);
+    setAllCredit(allCreditAmount.toFixed(2));
+    setAllDebit((allDebitAmount + tips * 100).toFixed(2));
+    setLoanCredit(loanCreditsAmount.toFixed(2));
+    setLoanDebit(loanDebitsAmount.toFixed(2));
+    setStockCredit(shareCreditsAmount.toFixed(2));
+    setStockDebit(shareDebitsAmount.toFixed(2));
     setTipCount(tips);
     setmyData1([allCredits, loanCredits, shareCredits]);
     setmyData2([loanDebits, allDebits, shareDebits]);
@@ -145,7 +152,7 @@ const Accounts = () => {
             <div className="flex flex-col w-full justify-center">
               <div>
                 <p className="text-3xl mb-2 font-medium dark:text-white m-auto">
-                  Current Balance: {currentBalance}
+                  Current Balance: {currentBalance} &#8377;
                 </p>
               </div>
             </div>
@@ -194,6 +201,7 @@ const Accounts = () => {
                       .map((item) => {
                         return (
                           <TransactionCard
+                            key={item._id}
                             item={item}
                             userName={userName}
                             isStockTransaction={true}
@@ -253,6 +261,7 @@ const Accounts = () => {
                     .map((item) => {
                       return (
                         <TransactionCard
+                          key={item._id}
                           item={item}
                           userName={userName}
                           isStockTransaction={false}
@@ -296,6 +305,7 @@ const Accounts = () => {
                     .map((item) => {
                       return (
                         <TransactionCard
+                          key={item._id}
                           item={item}
                           userName={userName}
                           isStockTransaction={false}
@@ -304,6 +314,34 @@ const Accounts = () => {
                     })}
                 </div>
               )}
+            </div>
+            <div className="flex flex-col w-full justify-center">
+              <div className="flex justify-center flex-col">
+                <p
+                  style={{ borderBottom: `2px solid ${currentColor}` }}
+                  className="inline p-2 text-3xl mb-5 font-medium dark:text-white m-auto"
+                >
+                  Tax Paid
+                </p>
+                <div className="flex lg:flex-row flex-col gap-3 justify-around m-3 my-6 dark:text-white text-xl">
+                  {taxes == 0 ? (
+                    <p className="text-xl mt-3 dark:text-white m-auto">
+                      You Didn't Pay Any Taxes Yet !!
+                    </p>
+                  ) : (
+                    <p
+                      style={{
+                        borderLeft: `3px solid #fc4e41`,
+                        borderRight: `3px solid #fc4e41`,
+                        padding: "8px",
+                        borderRadius: "10px",
+                      }}
+                    >
+                      Total: {taxes} &#8377;
+                    </p>
+                  )}
+                </div>
+              </div>
             </div>
             <div className="w-full">
               <div className="text-center w-full">
@@ -346,37 +384,39 @@ const Accounts = () => {
                   </p>
                 </div>
               </div>
-              <div className="dark:text-white mt-10 block w-10/12 rounded-xl text-center m-auto">
-                <ChartComponent
-                  height="400px"
-                  background="none"
-                  chartArea={{ border: { width: 0 } }}
-                  id="charts"
-                  primaryXAxis={primaryXAxis}
-                  primaryYAxis={primaryYAxis}
-                  ref={(chart) => (chartInstance = chart)}
-                >
-                  <Inject
-                    services={[ColumnSeries, LineSeries, Category, Export]}
-                  />
-                  <SeriesCollectionDirective>
-                    <SeriesDirective
-                      dataSource={myData1}
-                      xName="action"
-                      type="Column"
-                      yName="amount"
-                      pointColorMapping="color"
+              {(allCredit > 0 || allDebit > 0) && (
+                <div className="dark:text-white mt-10 block w-10/12 rounded-xl text-center m-auto">
+                  <ChartComponent
+                    height="400px"
+                    background="none"
+                    chartArea={{ border: { width: 0 } }}
+                    id="charts"
+                    primaryXAxis={primaryXAxis}
+                    primaryYAxis={primaryYAxis}
+                    ref={(chart) => (chartInstance = chart)}
+                  >
+                    <Inject
+                      services={[ColumnSeries, LineSeries, Category, Export]}
                     />
-                    <SeriesDirective
-                      dataSource={myData2}
-                      xName="action"
-                      type="Column"
-                      yName="amount"
-                      pointColorMapping="color"
-                    />
-                  </SeriesCollectionDirective>
-                </ChartComponent>
-              </div>
+                    <SeriesCollectionDirective>
+                      <SeriesDirective
+                        dataSource={myData1}
+                        xName="action"
+                        type="Column"
+                        yName="amount"
+                        pointColorMapping="color"
+                      />
+                      <SeriesDirective
+                        dataSource={myData2}
+                        xName="action"
+                        type="Column"
+                        yName="amount"
+                        pointColorMapping="color"
+                      />
+                    </SeriesCollectionDirective>
+                  </ChartComponent>
+                </div>
+              )}
             </div>
           </div>
         )}

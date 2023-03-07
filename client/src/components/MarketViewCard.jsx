@@ -79,7 +79,7 @@ const MarketViewCard = ({ stockname, k }) => {
             }
             className="md:text-2xl  text-xl font-normal tracking-wide "
           >
-            {ltp}
+            {ltp} &#8377;
           </p>
         </div>
         <div className="flex justify-between text-center">

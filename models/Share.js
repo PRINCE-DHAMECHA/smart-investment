@@ -18,6 +18,9 @@ const ShareSchema = new mongoose.Schema({
   price: {
     type: Number,
   },
+  tax: {
+    type: Number,
+  },
   quantity: {
     type: Number,
   },

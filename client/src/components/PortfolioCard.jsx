@@ -76,7 +76,7 @@ const MarketViewCard = ({ stockname, k, quantity, buyPrice, buyTime }) => {
               style={
                 TotalchangeInPrice >= 0
                   ? { color: "#00b700" }
-                  : { color: "##fc4e41" }
+                  : { color: "#fc4e41" }
               }
               className="hidden md:flex ml-2 text-sm lg:text-lg dark:text-white"
             >
@@ -106,7 +106,7 @@ const MarketViewCard = ({ stockname, k, quantity, buyPrice, buyTime }) => {
             }
             className="md:text-2xl  text-xl font-normal tracking-wide "
           >
-            {ltp}
+            {ltp}&#8377;
           </p>
         </div>
         <div className="flex justify-between text-center">

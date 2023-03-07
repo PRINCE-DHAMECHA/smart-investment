@@ -71,7 +71,7 @@ const Navbar = () => {
                   setmyText("Logging Out...");
                   setTimeout(() => {
                     logoutUser();
-                    setmyText("Login");
+                    window.location.reload();
                   }, 1000);
                 }}
               >

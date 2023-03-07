@@ -121,6 +121,7 @@ const AppProvider = ({ children }) => {
   };
 
   const addUserToLocalStorage = ({ user, token, location }) => {
+    console.log(JSON.stringify(user));
     localStorage.setItem("user", JSON.stringify(user));
     localStorage.setItem("token", token);
     localStorage.setItem("name", user.name);

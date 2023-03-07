@@ -29,8 +29,11 @@ const DeskCard = ({ data, isBorrow }) => {
   let year = date1.getFullYear();
   let date2 = new Date();
   let months = monthDiff(date1, date2);
-  let outstanding =
-    data.principal + (((data.principal * data.interest) / 12) * months) / 100;
+  let outstanding = (
+    data.principal * Math.pow(1 + data.interest / 100, months / 12)
+  ).toFixed(2);
+  console.log(user);
+  console.log(user.balance, outstanding);
   console.log(months);
   return (
     <div className="bg-white rounded-lg m-2">
@@ -57,7 +60,7 @@ const DeskCard = ({ data, isBorrow }) => {
             <div>
               Date: {zeroPad(day, 2)}/{zeroPad(month, 2)}/{year}
             </div>
-            {-Number(outstanding) + Number(user.balance) > 0 && (
+            {isBorrow && -Number(outstanding) + Number(user.balance) > 0 && (
               <div>Suggestion: Repay</div>
             )}
           </div>

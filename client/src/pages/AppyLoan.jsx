@@ -15,42 +15,44 @@ import {
   Category,
   DataLabel,
   Zoom,
+  Export,
 } from "@syncfusion/ej2-react-charts";
+import { TiExportOutline } from "react-icons/ti";
 
 const ApplyLoan = ({ isRepay }) => {
-  let lineChartData = [];
-  const { currentColor, authFetch, user } = useAppContext();
-  const [loading, setLoading] = useState(false);
-  const [chart, setChart] = useState(false);
+  const { currentColor, authFetch, user, currentMode } = useAppContext();
+  const [loading, setLoading] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
   const [message, setMessage] = useState("");
+  const [lineChartData, setlineChartData] = useState([]);
   let lender = localStorage.getItem("lender");
   let principal = localStorage.getItem("principal");
   let interest = localStorage.getItem("interest");
   let id = localStorage.getItem("id");
   let outstanding = localStorage.getItem("outstanding");
   let date = localStorage.getItem("date");
-  // const [linechartData, setLinechartData] = useState([]);
-  useEffect(() => {
-    let t = setTimeout(() => {
-      setChart(true);
-    }, 2000);
-    return () => [clearTimeout(t)];
-  }, []);
-  let linechartData = [];
   let tempDate = new Date();
   let tempOut = Number(outstanding);
-  for (let i = 0; i < 12; i++) {
-    tempOut =
-      Number(outstanding) +
-      Number(Number(principal) * i * Number(interest)) / Number(1200);
-    console.log(tempOut);
-    lineChartData.push({
-      x: `${zeroPad(tempDate.getMonth() + 1, 2)}/${tempDate.getFullYear()}`,
-      y: Number(tempOut),
-    });
-    tempDate.setDate(tempDate.getDate() + 30);
-  }
+  useEffect(() => {
+    let temp = [];
+    setLoading(true);
+    for (let i = 0; i < 200; i += 12) {
+      tempOut = Number(outstanding) * Math.pow(1 + interest / 100, i / 12);
+      console.log(tempOut);
+      tempDate.setMonth(tempDate.getMonth() + (i > 0 ? 12 : 0));
+      console.log(tempDate);
+      temp.push({
+        x: `${zeroPad(tempDate.getMonth(tempDate.getMonth() + i) + 1, 2)}/${
+          tempDate.getFullYear() % 100
+        }`,
+        y: Number(tempOut),
+      });
+      tempDate.setDate(tempDate.getDate() + 31);
+    }
+    setlineChartData(temp);
+    setLoading(false);
+  }, []);
+
   console.log(lineChartData);
   const primaryxAxis = {
     valueType: "Category",
@@ -59,14 +61,20 @@ const ApplyLoan = ({ isRepay }) => {
       color: currentColor,
       width: 0,
     },
-    title: "Month",
+    labelStyle: {
+      color: currentMode === "Dark" ? "white" : "black",
+      fontWeight: "light",
+    },
   };
   const primaryyAxis = {
     majorGridLines: {
       color: currentColor,
       width: 0.5,
     },
-    title: "Outstanding",
+    labelStyle: {
+      color: currentMode === "Dark" ? "white" : "black",
+      fontWeight: "light",
+    },
   };
   const date1 = new Date(date);
   let day = date1.getDate();
@@ -97,6 +105,8 @@ const ApplyLoan = ({ isRepay }) => {
       await authFetch.post("loan/repayLoan", {
         _id: id,
         outstanding,
+        principal,
+        interest,
       });
       setMessage("Congrats!! You Successfully Repay Your Loan");
       setIsSuccess(true);
@@ -107,113 +117,142 @@ const ApplyLoan = ({ isRepay }) => {
       setLoading(false);
     }
   };
+  let chartInstance;
+  function clickHandler() {
+    chartInstance.exportModule.export("PNG", `Future Outstandings`);
+  }
   return (
     <div className="m-2 md:m-10 mb-10 mt-24 mx-2 md:mx-9 p-2 pb-10 md:p-10 dark:bg-secondary-dark-bg bg-white rounded-3xl">
       <Header
         category="App"
         title={isRepay ? "Repay Loan" : "Apply For A Loan"}
       />
-      {loading && (
+      {loading ? (
         <div className="w-full mb-5">
           <div className="m-auto w-7">
             <RingLoader color={currentColor} className="-ml-5" />
           </div>
         </div>
-      )}
-      <div className="text-center flex justify-evenly flex-col gap-4 text-lg md:text-2xl dark:text-white">
-        {!loading && (
-          <p
-            className="font-semibold"
-            style={{ color: isSuccess ? "green" : "red" }}
-          >
-            {message}
-          </p>
-        )}
-        <div className="flex xl:flex-row flex-col gap-10">
-          {isRepay && <p>Outstanding: {outstanding}</p>}
-          <div>
-            <p>Lender : {lender?.toUpperCase()}</p>
-          </div>
-          <div>Amount : {principal}rs</div>
-          <div>Interest : {interest}%</div>
-          {isRepay && (
-            <p>
-              Issued Date: {zeroPad(day, 2)}/{zeroPad(month, 2)}/{year}
+      ) : (
+        <div className="text-center flex justify-center flex-col gap-4 text-md md:text-lg dark:text-white">
+          {!loading && (
+            <p
+              className="font-semibold"
+              style={{ color: isSuccess ? "green" : "red" }}
+            >
+              {message}
             </p>
           )}
-        </div>
-        <div className="m-auto mt-6 flex gap-5">
-          <div className="m-auto">
-            {lender !== user.name && (
-              <button
-                style={{
-                  background: currentColor,
-                }}
-                onClick={isRepay ? handleRepay : handleSubmit}
-                className="p-2 px-5 rounded-md text-white"
-              >
-                {isRepay ? "Repay" : "Apply"}
-              </button>
-            )}
-          </div>
-          <div className="m-auto">
-            <Link
-              to="/notes"
-              style={{
-                background: currentColor,
-              }}
-              onClick={handleSubmit}
-              className="p-2 px-5 rounded-md text-white"
-            >
-              Notes
-            </Link>
-          </div>
-        </div>
-        {isRepay && chart && (
-          <div className="w-full m-auto md:w-10/12 mt-10 block border-1 border-black border-solid rounded-xl ">
-            <ChartComponent
-              border={{ width: 0 }}
-              background="#fafbfb"
-              height="400"
-              id="charts"
-              primaryXAxis={primaryxAxis}
-              primaryYAxis={primaryyAxis}
-              title={`Future Outstandings`}
-              legendSettings={{ visible: true }}
-              tooltip={{ enable: true }}
-              margin={{ left: 10, right: 40, top: 30, bottom: 0 }}
-            >
-              <Inject
-                services={[
-                  ColumnSeries,
-                  Legend,
-                  DataLabel,
-                  Tooltip,
-                  LineSeries,
-                  Category,
-                  Zoom,
-                ]}
-              />
-              <SeriesCollectionDirective>
-                <SeriesDirective
-                  dataSource={lineChartData}
-                  xName="x"
-                  yName="y"
-                  name={`Now: ${outstanding}`}
-                  width={2}
-                  marker={{
-                    visible: true,
-                    height: 5,
-                    width: 5,
-                    shape: "Diamond",
-                    fill: currentColor,
+          <div
+            style={{
+              borderLeft: `2px solid ${currentColor}`,
+              borderRadius: "10px",
+            }}
+            className="flex flex-row gap-10 justify-center text-left lg:w-2/3 w-full m-auto p-6"
+          >
+            <div className="w-9/12">
+              <p>Lender : {lender?.toUpperCase()}</p>
+              <p>Amount : {principal}rs</p>
+              <p>Interest : {interest}%</p>
+              {isRepay ? (
+                <p>Outstanding: {outstanding}</p>
+              ) : (
+                <p>Platform Fees: {(principal * 0.005).toFixed(2)}</p>
+              )}
+              {isRepay && (
+                <p>
+                  Issued Date: {zeroPad(day, 2)}/{zeroPad(month, 2)}/{year}
+                </p>
+              )}
+            </div>
+            <div className="text-right m-auto w-3/12">
+              {lender !== user.name && (
+                <button
+                  style={{
+                    background: currentColor,
                   }}
-                />
-              </SeriesCollectionDirective>
-            </ChartComponent>
+                  onClick={isRepay ? handleRepay : handleSubmit}
+                  className="p-2 px-5 rounded-md text-white"
+                >
+                  {isRepay ? "Repay" : "Apply"}
+                </button>
+              )}
+            </div>
           </div>
-        )}
-      </div>
+          {isRepay && (
+            <div className="flex flex-col m-4 mt-10 p-2">
+              <div className="flex flex-row justify-center w-1/2 m-auto text-2xl font-medium">
+                <p
+                  className="p-2"
+                  style={{ borderBottom: `2px solid ${currentColor}` }}
+                >
+                  Future Outstandings
+                </p>
+                <button
+                  className="p-2 inline"
+                  value="print"
+                  style={{ borderBottom: `2px solid ${currentColor}` }}
+                  onClick={clickHandler.bind(this)}
+                >
+                  <TiExportOutline
+                    fontSize={"20px"}
+                    color={`${currentColor}`}
+                  />
+                </button>
+              </div>
+              <div className="w-full m-auto md:w-10/12 mt-10 block rounded-xl ">
+                <ChartComponent
+                  border={{ width: 0 }}
+                  chartArea={{ border: { width: 0 } }}
+                  background="none"
+                  height="400"
+                  id="charts"
+                  primaryXAxis={primaryxAxis}
+                  primaryYAxis={primaryyAxis}
+                  legendSettings={{
+                    visible: true,
+                    textStyle: {
+                      color: currentMode === "Dark" ? "white" : "black",
+                    },
+                  }}
+                  tooltip={{ enable: true }}
+                  margin={{ left: 10, right: 40, top: 30, bottom: 0 }}
+                  ref={(chart) => (chartInstance = chart)}
+                >
+                  <Inject
+                    services={[
+                      ColumnSeries,
+                      Legend,
+                      DataLabel,
+                      Tooltip,
+                      LineSeries,
+                      Category,
+                      Zoom,
+                      Export,
+                    ]}
+                  />
+                  <SeriesCollectionDirective>
+                    <SeriesDirective
+                      dataSource={lineChartData}
+                      xName="x"
+                      yName="y"
+                      name={`Current: ${outstanding}`}
+                      width={2}
+                      marker={{
+                        visible: true,
+                        height: 5,
+                        width: 5,
+                        shape: "Diamond",
+                        fill: currentColor,
+                      }}
+                    />
+                  </SeriesCollectionDirective>
+                </ChartComponent>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

@@ -229,9 +229,14 @@ const StockDetails = () => {
               style={{ borderColor: currentColor }}
               className="flex flex-col gap-2 dark:text-white m-auto md:text-left px-5 font-semibold text-base md:text-xl border-l-4"
             >
-              <p>Current Price: {about.currentPrice}</p>
-              <p>Target High: {about.targetHigh ? about.targetHigh : "NA"}</p>
-              <p>Target Low: {about.targetLow ? about.targetLow : "NA"}</p>
+              <p>Current Price: {about.currentPrice} &#8377;</p>
+              <p>
+                Target High: {about.targetHigh ? about.targetHigh : "NA"}{" "}
+                &#8377;
+              </p>
+              <p>
+                Target Low: {about.targetLow ? about.targetLow : "NA"} &#8377;
+              </p>
               <p>
                 Recommendation:{" "}
                 {about.recommendation !== "none" ? about.recommendation : "NA"}
