@@ -93,7 +93,7 @@ export default function Register() {
                   ? " Sign In To Your Account  "
                   : " Create New Account "}
               </h2>
-              <h2 className="mt-2 text-center text-xl  dark:text-white text-gray-900">
+              <h2 className="mt-5 text-center text-xl  dark:text-white text-gray-900">
                 {showAlert && (
                   <div className={`text-${alertType}-400`}>{alertText}</div>
                 )}

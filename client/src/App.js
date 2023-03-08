@@ -16,6 +16,7 @@ import Stocks from "./pages/Stocks";
 import StockDetails from "./pages/StockDetails";
 import Accounts from "./pages/Accounts";
 import Tips from "./pages/Tips";
+import Validator from "./pages/Validator";
 
 function App() {
   const { currentMode } = useAppContext();
@@ -44,7 +45,10 @@ function App() {
           >
             <Route element={<Portfolio />}></Route>
             <Route path="marketView" element={<MarketView />}></Route>
-            <Route path="buyStock" element={<BuyStock />}></Route>
+            <Route
+              path="buyStock/:stockName/:id"
+              element={<Validator />}
+            ></Route>
             <Route path="Portfolio" element={<Portfolio />}></Route>
             <Route path="createNote" element={<CreateNote />}></Route>
             <Route path="/notes" element={<Notes />}></Route>

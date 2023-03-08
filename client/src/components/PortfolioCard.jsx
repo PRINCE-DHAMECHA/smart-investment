@@ -111,8 +111,7 @@ const MarketViewCard = ({ stockname, k, quantity, buyPrice, buyTime }) => {
         </div>
         <div className="flex justify-between text-center">
           <Link
-            to="/buyStock"
-            onClick={() => setStockId(id, stockname)}
+            to={`/buyStock/${stockname}/${id}`}
             style={
               TotalchangeInPrice >= 0
                 ? { background: currentColor }

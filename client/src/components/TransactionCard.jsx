@@ -31,7 +31,8 @@ const TransactionCard = ({ item, userName, isStockTransaction }) => {
           </div>
           <div className="flex flex-col justify-center text-right">
             <p>
-              {item.receiver === userName ? "+" : "-"} {item.amount} &#8377;
+              {item.receiver === userName ? "+" : "-"}{" "}
+              {Number(item.amount).toFixed(2)} &#8377;
             </p>
           </div>
         </div>

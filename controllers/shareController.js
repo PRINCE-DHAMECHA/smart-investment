@@ -193,7 +193,7 @@ const sell = async (req, res) => {
             const transaction = await Transaction.create({
               giver: "Stock-Market",
               receiver: ownerName,
-              amount: (sellPrice * quantity - DP_Charges).toFixed(2),
+              amount: sellPrice * quantity - DP_Charges,
               transactionTime: new Date(),
               isStockTransaction: true,
               stockName: stockName,
@@ -239,4 +239,23 @@ const getUser = (req, res) => {
   });
 };
 
-export { buy, sell, getUser, getShare };
+const getOneShare = async (req, res) => {
+  const { stockName } = req.body;
+  try {
+    const share = await Share.findOne({
+      stockName,
+      createdBy: req.user.userId,
+    });
+    console.log(share);
+    if (share) {
+      res.status(StatusCodes.OK).json(share);
+    } else {
+      res.status(StatusCodes.OK).json({ msg: "You Don't Own This Stock" });
+    }
+  } catch (e) {
+    console.log(e);
+    throw new BadRequestError(e);
+  }
+};
+
+export { buy, sell, getUser, getShare, getOneShare };

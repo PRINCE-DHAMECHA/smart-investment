@@ -41,7 +41,8 @@ const Navbar = () => {
   let localStorage = window.localStorage.getItem("user");
   localStorage = localStorage?.slice(1, localStorage.length - 1);
   const user = localStorage?.split(",")[1]?.split(":")[1];
-  const name = user?.slice(1, user.length - 1);
+  const name = window.localStorage.getItem("name");
+  console.log(name);
   return (
     <div className="dark:bg-main-dark-bg">
       <div className="flex justify-between p-3 md:mx-6 relative">

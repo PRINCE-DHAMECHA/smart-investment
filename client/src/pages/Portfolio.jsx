@@ -135,7 +135,7 @@ const Portfolio = () => {
           </div>
         ) : (
           <div>
-            <div className="flex flex-col">
+            <div className="flex flex-col mb-20">
               <div className="w-full flex xl:flex-row flex-col justify-around px-0 text-center dark:text-white font-semibold md:text-2xl text-lg  mb-10 text-black">
                 <h1 className="">Wallet : {user["balance"]} &#8377;</h1>
                 <h1>Invested : {invested} &#8377;</h1>
@@ -194,28 +194,6 @@ const Portfolio = () => {
                 })}
               </div>
             </div>
-            <div className="m-10 flex justify-center gap-8">
-              <NavLink
-                style={{
-                  backgroundColor: currentColor,
-                  borderRadius: "10px",
-                }}
-                to="/marketview"
-                className={`text-xl text-white px-6 py-2 hover:drop-shadow-xl`}
-              >
-                Trade
-              </NavLink>
-              <NavLink
-                style={{
-                  backgroundColor: currentColor,
-                  borderRadius: "10px",
-                }}
-                to="/themepicker"
-                className={`text-xl text-white px-6 py-2 hover:drop-shadow-xl `}
-              >
-                Themes
-              </NavLink>
-            </div>
             <Header title="Analysis" />
             {Portfolioshare.length != 0 ? (
               <div className="flex flex-col justify-center text-center">
@@ -267,9 +245,32 @@ const Portfolio = () => {
               </div>
             ) : (
               <p className="dark:text-white text-lg font-medium">
-                No TRansactions To Summarize
+                No Transactions To Summarize
               </p>
             )}
+
+            <div className="m-10 mt-20 flex justify-center gap-8">
+              <NavLink
+                style={{
+                  backgroundColor: currentColor,
+                  borderRadius: "10px",
+                }}
+                to="/marketview"
+                className={`text-xl text-white px-6 py-2 hover:drop-shadow-xl`}
+              >
+                Trade
+              </NavLink>
+              <NavLink
+                style={{
+                  backgroundColor: currentColor,
+                  borderRadius: "10px",
+                }}
+                to="/themepicker"
+                className={`text-xl text-white px-6 py-2 hover:drop-shadow-xl `}
+              >
+                Themes
+              </NavLink>
+            </div>
           </div>
         )}
       </div>

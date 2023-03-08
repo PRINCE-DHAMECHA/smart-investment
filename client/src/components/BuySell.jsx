@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAppContext } from "../context/appContext";
 import RingLoader from "react-spinners/RingLoader";
 import Switch from "react-switch";
-const BuySell = ({ pri }) => {
+const BuySell = ({ pri, stockName }) => {
   const { authFetch, currentColor } = useAppContext();
   const [isAction, setisAction] = useState("Buy");
   const [Quantity, setQuantity] = useState(1);
@@ -20,7 +20,6 @@ const BuySell = ({ pri }) => {
     setloading(true);
     let price = pri;
     let quantity = Quantity;
-    let stockName = localStorage.getItem("stockName");
     let ownerName = localStorage.getItem("name");
     try {
       await authFetch.post(`/share/${isAction}`, {

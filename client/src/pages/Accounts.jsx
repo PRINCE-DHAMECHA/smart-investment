@@ -74,15 +74,23 @@ const Accounts = () => {
         allDebitAmount += Number(data[i].amount);
         if (data[i].isStockTransaction) {
           shareDebitsAmount += Number(data[i].amount);
-        } else {
+        } else if (data[i].receiver !== "Tip Account") {
           loanDebitsAmount += Number(data[i].amount);
+          if (!data[i].isRepay) {
+            loanDebitsAmount += data[i].tax;
+            allDebitAmount += data[i].tax;
+          }
         }
       } else if (data[i].receiver == userName) {
         allCreditAmount += Number(data[i].amount);
         if (data[i].isStockTransaction) {
           shareCreditsAmount += Number(data[i].amount);
-        } else {
+        } else if (data[i].receiver !== "Tip Account") {
           loanCreditsAmount += Number(data[i].amount);
+          if (!data[i].isRepay) {
+            loanCreditsAmount -= data[i].tax;
+            allCreditAmount -= data[i].tax;
+          }
         }
       }
       if (data[i].receiver === "Tip Account") {
@@ -101,7 +109,7 @@ const Accounts = () => {
     shareCredits.amount = shareCreditsAmount;
     shareDebits.amount = shareDebitsAmount;
     setAllCredit(allCreditAmount.toFixed(2));
-    setAllDebit((allDebitAmount + tips * 100).toFixed(2));
+    setAllDebit(allDebitAmount.toFixed(2));
     setLoanCredit(loanCreditsAmount.toFixed(2));
     setLoanDebit(loanDebitsAmount.toFixed(2));
     setStockCredit(shareCreditsAmount.toFixed(2));
@@ -326,7 +334,7 @@ const Accounts = () => {
                 <div className="flex lg:flex-row flex-col gap-3 justify-around m-3 my-6 dark:text-white text-xl">
                   {taxes == 0 ? (
                     <p className="text-xl mt-3 dark:text-white m-auto">
-                      You Didn't Pay Any Taxes Yet !!
+                      You Didn't Pay Any Taxes !!
                     </p>
                   ) : (
                     <p
