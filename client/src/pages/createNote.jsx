@@ -59,7 +59,7 @@ const CreateNote = () => {
                   name="principal"
                   onChange={(e) => setPrincipal(e.target.value)}
                   className={`appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md
-                  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-md dark:bg-slate-700 dark:text-white dark:border-slate-500 dark:focus:border-gray-300 dark:placeholder-white`}
+                  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-md dark:bg-[#3d4249] dark:text-white dark:border-slate-500 dark:focus:border-gray-300 dark:placeholder-white`}
                   placeholder="Principal"
                   min={"1"}
                   required
@@ -72,7 +72,7 @@ const CreateNote = () => {
                   type="number"
                   value={interest}
                   onChange={(e) => setInterest(e.target.value)}
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-slate-500 dark:focus:border-gray-300 placeholder-gray-500 dark:placeholder-white text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-md dark:bg-slate-700 dark:text-white"
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-slate-500 dark:focus:border-gray-300 placeholder-gray-500 dark:placeholder-white text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-md dark:bg-[#3d4249] dark:text-white"
                   placeholder="Interest"
                   max={"100"}
                   min={"1"}

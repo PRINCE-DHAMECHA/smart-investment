@@ -1,4 +1,4 @@
-import logoLight from "../utils/img/logolight.jpg";
+import logoLight from "../utils/img/logo.jpg";
 import logoDark from "../utils/img/logodark.jpg";
 import { useAppContext } from "../context/appContext";
 import { Link } from "react-router-dom";
@@ -86,8 +86,12 @@ export default function Register() {
           <div className="max-w-sm w-full space-y-8">
             <div>
               <h2
-                style={{ color: currentColor }}
-                className="mt-12 text-center text-3xl  dark:text-white text-gray-900"
+                style={{
+                  color: currentColor,
+                  borderBottom: `2px solid ${currentColor}`,
+                  borderRadius: "10px",
+                }}
+                className="mt-8 p-1 py-2 text-center text-2xl font-medium dark:text-white text-gray-900"
               >
                 {state.isMember
                   ? " Sign In To Your Account  "
@@ -117,7 +121,7 @@ export default function Register() {
                       value={state.value}
                       onChange={handleChange}
                       className={
-                        "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-slate-700 dark:text-white focus:z-10 sm:text-md dark:placeholder-white dark:border-slate-500 dark:focus:border-gray-300"
+                        "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-[#3d4249] dark:text-white focus:z-10 sm:text-md dark:placeholder-white dark:border-slate-500 dark:focus:border-gray-300"
                       }
                       placeholder="Name"
                     />
@@ -133,7 +137,7 @@ export default function Register() {
                     name="email"
                     onChange={handleChange}
                     className={`appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900
-                  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-md dark:bg-slate-700 dark:text-white dark:border-slate-500 dark:focus:border-gray-300 dark:placeholder-white
+                  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-md dark:bg-[#3d4249] dark:text-white dark:border-slate-500 dark:focus:border-gray-300 dark:placeholder-white
                   ${state.isMember ? "rounded-t-md" : ""}`}
                     placeholder="Email address"
                   />
@@ -147,7 +151,7 @@ export default function Register() {
                     name="password"
                     type="password"
                     onChange={handleChange}
-                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-slate-500 dark:focus:border-gray-300 placeholder-gray-500 dark:placeholder-white text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-md dark:bg-slate-700 dark:text-white"
+                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-slate-500 dark:focus:border-gray-300 placeholder-gray-500 dark:placeholder-white text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-md dark:bg-[#3d4249] dark:text-white"
                     placeholder="Password"
                   />
                 </div>
@@ -173,7 +177,7 @@ export default function Register() {
                 <button
                   type="button"
                   onClick={toggle}
-                  className="mb-10"
+                  className="mb-6"
                   style={{ color: currentColor }}
                 >
                   {state.isMember ? "Register" : "Login"}

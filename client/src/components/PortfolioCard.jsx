@@ -59,12 +59,9 @@ const MarketViewCard = ({ stockname, k, quantity, buyPrice, buyTime }) => {
     <div
       style={{
         // background: `linear-gradient(120deg,${rgba2} 20%,${rgba1})`,
-        borderLeft:
-          currentMode !== "Dark"
-            ? `4px solid ${currentColor}`
-            : "4px solid white",
+        borderLeft: `4px solid ${currentColor}`,
       }}
-      className="rounded-lg border border-gray-100 cursor-pointer shadow-sm dark:shadow-md dark:bg-gray-700 dark:border-gray-700 dark:hover:shadow-xl hover:shadow-md"
+      className="rounded-lg border border-gray-100 cursor-pointer shadow-sm dark:shadow-md dark:bg-[#3d4249] dark:border-gray-700 dark:hover:shadow-xl hover:shadow-md"
     >
       <div className="p-3">
         <div className="flex justify-between md:px-1 md:pt-2  m-auto">

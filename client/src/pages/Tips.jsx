@@ -12,17 +12,20 @@ const Tips = () => {
   const [loading, setLoading] = useState(true);
   const { currentColor, authFetch } = useAppContext();
   const [currentBuy, setcurrentBuy] = useState({});
+  const [isRefetch, setisRefetch] = useState(false);
   const handlePay = async () => {
     setLoading(true);
     try {
       const data = await authFetch("account/pay");
       setIsTipBought(true);
       setLoading(false);
+      setMyText("Buy Again");
     } catch (e) {
       setMyText("Error");
       setLoading(false);
       console.log(e);
     }
+    setisRefetch((prev) => !prev);
   };
   useEffect(async () => {
     setLoading(true);
@@ -34,7 +37,7 @@ const Tips = () => {
       console.log(error);
     }
     setLoading(false);
-  }, [isTipBought]);
+  }, [isRefetch]);
   useEffect(() => {
     let arr = [];
     const d = new Date();
@@ -61,7 +64,14 @@ const Tips = () => {
             </div>
           </div>
         ) : (
-          <div className="flex flex-col justify-center dark:text-white gap-5">
+          <div
+            style={{
+              borderLeft: `2px solid ${currentColor}`,
+              borderRight: `2px solid ${currentColor}`,
+              borderRadius: "10px",
+            }}
+            className="p-4 flex flex-col justify-center dark:text-white gap-5"
+          >
             <p className="text-2xl font-medium">
               Current Balance: {currentBalance} &#8377;
             </p>
@@ -90,7 +100,7 @@ const Tips = () => {
                     borderRight: `2px solid ${currentColor}`,
                     borderRadius: "10px",
                   }}
-                  className="flex lg:w-5/12 lg:m-auto lg:mt-10 mx-5 my-4 p-3 text-lg font-normal flex-col gap-2 mt-5"
+                  className="flex lg:w-5/12 lg:m-auto lg:mt-6 mx-5 my-4 p-3 text-lg font-normal flex-col gap-2 mt-5"
                 >
                   <p style={{ color: "#7ced65" }}>
                     Buy {MarketViewData[currentBuy.stockIndex].stockName}{" "}
@@ -101,6 +111,16 @@ const Tips = () => {
                     Possible Gain:{" "}
                     {(currentBuy["possibleGain"] * 100).toFixed(2)}%
                   </p>
+                  <button
+                    style={{
+                      backgroundColor: currentColor,
+                      borderRadius: "10px",
+                    }}
+                    onClick={handlePay}
+                    className="w-36 m-auto text-lg text-white mt-2 px-4 py-2 hover:drop-shadow-xl hover:skew-x-2"
+                  >
+                    {myText}
+                  </button>
                 </div>
               </div>
             )}

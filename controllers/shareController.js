@@ -54,7 +54,7 @@ const buy = async (req, res) => {
           const transaction = await Transaction.create({
             giver: ownerName,
             receiver: "Stock-Market",
-            amount: (price * quantity + brokerage).toFixed(2),
+            amount: (tempPrice * tempQuantity + brokerage).toFixed(2),
             transactionTime: new Date(),
             isStockTransaction: true,
             stockName: stockName,
@@ -89,10 +89,11 @@ const buy = async (req, res) => {
             balance: newWallet,
           }
         ).then(async (data) => {
+          console.log(tempPrice, tempQuantity);
           const transaction = await Transaction.create({
             giver: ownerName,
             receiver: "Stock-Market",
-            amount: (price * quantity + brokerage).toFixed(2),
+            amount: (tempPrice * tempQuantity + brokerage).toFixed(2),
             transactionTime: new Date(),
             isStockTransaction: true,
             stockName: stockName,

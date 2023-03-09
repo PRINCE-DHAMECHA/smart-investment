@@ -11,7 +11,7 @@ const TransactionCard = ({ item, userName, isStockTransaction }) => {
   let newTransactionTime = `${buyDay}/${BuyMonth}/${BuyYear}`;
   return (
     <div
-      className="lg:w-2/5 w-full m-2 py-3 px-4 dark:text-white lg:text-lg shadow-sm dark:shadow-md"
+      className="lg:w-2/5 w-full m-2 py-3 px-4 dark:text-white lg:text-lg shadow-md hover:shadow-lg dark:bg-[#3d4249]"
       style={{
         borderLeft:
           item.receiver === userName
@@ -27,13 +27,13 @@ const TransactionCard = ({ item, userName, isStockTransaction }) => {
             <p>Price: {item.price} &#8377;</p>
             <p>Quantity: {item.quantity}</p>
             <p>Tax: {item.tax.toFixed(2)} &#8377;</p>
-            <p>Date: {newTransactionTime}</p>
           </div>
           <div className="flex flex-col justify-center text-right">
             <p>
               {item.receiver === userName ? "+" : "-"}{" "}
               {Number(item.amount).toFixed(2)} &#8377;
             </p>
+            <p>Date: {newTransactionTime}</p>
           </div>
         </div>
       )}
@@ -55,7 +55,6 @@ const TransactionCard = ({ item, userName, isStockTransaction }) => {
               <p>Pricipal: {item.principal} &#8377;</p>
               <p>Interest: {item.interest}%</p>
               <p>Tax: {item.isRepay ? "0" : item.tax} &#8377;</p>
-              <p>Date: {newTransactionTime}</p>
             </div>
             <div className="flex flex-col justify-center text-right">
               {item.receiver === userName ? (
@@ -76,6 +75,7 @@ const TransactionCard = ({ item, userName, isStockTransaction }) => {
                   &#8377;
                 </p>
               )}
+              <p>Date: {newTransactionTime}</p>
             </div>
           </div>
         </div>

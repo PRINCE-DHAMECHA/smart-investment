@@ -13,7 +13,7 @@ const Stocks = () => {
       <div className="text-center w-full">
         <Header title="Search" />
         <input
-          className="text-14 md:text-lg h-16 shadow-md appearance-none border-none border-gray-200 rounded-2xl w-full md:w-2/3 md:p-4 p-2 dark:text-white z-10 leading-tight focus:outline-none focus:border-none dark:bg-secondary-dark-bg  focus:bg-white"
+          className="text-14 md:text-lg h-16 shadow-md appearance-none border-none border-gray-200 rounded-2xl w-full md:w-2/3 md:p-4 p-2 dark:text-white z-10 leading-tight focus:outline-none dark:placeholder-white  focus:border-none dark:bg-[#3d4249]  focus:bg-white"
           value={inp}
           placeholder="Search Stocks Here..."
           onChange={(e) => {

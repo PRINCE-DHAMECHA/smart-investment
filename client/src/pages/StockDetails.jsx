@@ -226,8 +226,8 @@ const StockDetails = () => {
         ) : (
           <div className="flex flex-wrap">
             <div
-              style={{ borderColor: currentColor }}
-              className="flex flex-col gap-2 dark:text-white m-auto md:text-left px-5 font-semibold text-base md:text-xl border-l-4"
+              style={{ borderColor: currentColor, borderRadius: "10px" }}
+              className="flex flex-col gap-2 dark:text-white m-auto md:text-left p-4 font-semibold text-base md:text-xl border-l-2"
             >
               <p>Current Price: {about.currentPrice} &#8377;</p>
               <p>

@@ -31,12 +31,9 @@ const Note = ({ note, handleFunc }) => {
       ) : (
         <div className="bg-white rounded-lg m-2">
           <div
-            className="rounded-lg border dark:bg-gray-700 border-gray-100 cursor-pointer shadow-md dark:border-gray-700  h-auto p-5"
+            className="rounded-lg border dark:bg-[#3d4249] border-gray-100 cursor-pointer shadow-md dark:border-gray-700  h-auto p-5"
             style={{
-              borderLeft:
-                currentMode !== "Dark"
-                  ? `4px solid ${currentColor}`
-                  : "4px solid white",
+              borderLeft: `4px solid ${currentColor}`,
             }}
           >
             <div className="flex text-center justify-around  dark:text-white font-medium md:text-lg text-base tracking-wide">

@@ -159,12 +159,19 @@ const Accounts = () => {
           <div className="flex flex-col w-full justify-center text-center gap-14">
             <div className="flex flex-col w-full justify-center">
               <div>
-                <p className="text-3xl mb-2 font-medium dark:text-white m-auto">
+                <p className="md:text-3xl text-xl mb-2 font-medium dark:text-white m-auto shadow-sm inline p-3">
                   Current Balance: {currentBalance} &#8377;
                 </p>
               </div>
             </div>
-            <div className="flex flex-col w-full justify-center">
+            <div
+              style={{
+                borderBottom: `2px solid ${currentColor}`,
+                borderTop: `2px solid ${currentColor}`,
+                borderRadius: "10px",
+              }}
+              className="flex flex-col w-full justify-center shadow-lg dark:shadow-gray-600 p-4 py-8"
+            >
               <div className="flex justify-center flex-col">
                 <p
                   style={{ borderBottom: `2px solid ${currentColor}` }}
@@ -175,21 +182,23 @@ const Accounts = () => {
                 <div className="flex lg:flex-row flex-col gap-3 justify-around m-3 my-6 dark:text-white text-xl font-medium">
                   <p
                     style={{
-                      borderLeft: `3px solid #7ced65`,
-                      borderRight: `3px solid #7ced65`,
+                      borderBottom: `2px solid #7ced65`,
+                      borderLeft: `2px solid #7ced65`,
                       padding: "8px",
                       borderRadius: "10px",
                     }}
+                    className="shadow-md"
                   >
                     Credit: {stockCredit} &#8377;
                   </p>
                   <p
                     style={{
-                      borderLeft: `3px solid #fc4e41`,
-                      borderRight: `3px solid #fc4e41`,
+                      borderBottom: `2px solid #fc4e41`,
+                      borderLeft: `2px solid #fc4e41`,
                       padding: "8px",
                       borderRadius: "10px",
                     }}
+                    className="shadow-md"
                   >
                     Debits: {stockDebit} &#8377;
                   </p>
@@ -220,7 +229,14 @@ const Accounts = () => {
                 )}
               </div>
             </div>
-            <div className="flex flex-col w-full justify-center">
+            <div
+              style={{
+                borderBottom: `2px solid ${currentColor}`,
+                borderTop: `2px solid ${currentColor}`,
+                borderRadius: "10px",
+              }}
+              className="flex flex-col w-full justify-center shadow-lg dark:shadow-gray-600 p-4 py-8"
+            >
               <div className="flex justify-center flex-col">
                 <p
                   style={{ borderBottom: `2px solid ${currentColor}` }}
@@ -231,21 +247,23 @@ const Accounts = () => {
                 <div className="flex lg:flex-row flex-col gap-3 justify-around m-3 my-6 dark:text-white text-xl font-medium">
                   <p
                     style={{
-                      borderLeft: `3px solid #7ced65`,
-                      borderRight: `3px solid #7ced65`,
+                      borderBottom: `2px solid #7ced65`,
+                      borderLeft: `2px solid #7ced65`,
                       padding: "8px",
                       borderRadius: "10px",
                     }}
+                    className="shadow-md"
                   >
                     Credit: {loanCredit} &#8377;
                   </p>
                   <p
                     style={{
-                      borderLeft: `3px solid #fc4e41`,
-                      borderRight: `3px solid #fc4e41`,
+                      borderBottom: `2px solid #fc4e41`,
+                      borderLeft: `2px solid #fc4e41`,
                       padding: "8px",
                       borderRadius: "10px",
                     }}
+                    className="shadow-md"
                   >
                     Debits: {loanDebit} &#8377;
                   </p>
@@ -279,7 +297,14 @@ const Accounts = () => {
                 </div>
               )}
             </div>
-            <div className="flex flex-col w-full justify-center">
+            <div
+              style={{
+                borderBottom: `2px solid ${currentColor}`,
+                borderTop: `2px solid ${currentColor}`,
+                borderRadius: "10px",
+              }}
+              className="flex flex-col w-full justify-center shadow-lg dark:shadow-gray-600 p-4 py-8"
+            >
               <div className="flex justify-center flex-col">
                 <p
                   style={{ borderBottom: `2px solid ${currentColor}` }}
@@ -290,11 +315,12 @@ const Accounts = () => {
                 <div className="flex lg:flex-row flex-col gap-3 justify-around m-3 my-6 dark:text-white text-xl font-medium">
                   <p
                     style={{
-                      borderLeft: `3px solid #fc4e41`,
-                      borderRight: `3px solid #fc4e41`,
+                      borderBottom: `2px solid #fc4e41`,
+                      borderLeft: `2px solid #fc4e41`,
                       padding: "8px",
                       borderRadius: "10px",
                     }}
+                    className="shadow-md"
                   >
                     Total: {100 * tipCount} &#8377;
                   </p>
@@ -323,7 +349,14 @@ const Accounts = () => {
                 </div>
               )}
             </div>
-            <div className="flex flex-col w-full justify-center">
+            <div
+              style={{
+                borderBottom: `2px solid ${currentColor}`,
+                borderTop: `2px solid ${currentColor}`,
+                borderRadius: "10px",
+              }}
+              className="flex flex-col w-full justify-center shadow-lg dark:shadow-gray-600 p-4 py-8"
+            >
               <div className="flex justify-center flex-col">
                 <p
                   style={{ borderBottom: `2px solid ${currentColor}` }}
@@ -339,11 +372,12 @@ const Accounts = () => {
                   ) : (
                     <p
                       style={{
-                        borderLeft: `3px solid #fc4e41`,
-                        borderRight: `3px solid #fc4e41`,
+                        borderBottom: `2px solid #fc4e41`,
+                        borderLeft: `2px solid #fc4e41`,
                         padding: "8px",
                         borderRadius: "10px",
                       }}
+                      className="shadow-md"
                     >
                       Total: {taxes} &#8377;
                     </p>
@@ -351,7 +385,14 @@ const Accounts = () => {
                 </div>
               </div>
             </div>
-            <div className="w-full">
+            <div
+              className="w-full shadow-lg dark:shadow-gray-600 p-4 py-12"
+              style={{
+                borderBottom: `2px solid ${currentColor}`,
+                borderTop: `2px solid ${currentColor}`,
+                borderRadius: "10px",
+              }}
+            >
               <div className="text-center w-full">
                 <p
                   style={{ borderBottom: `2px solid ${currentColor}` }}
